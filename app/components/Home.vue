@@ -1,9 +1,6 @@
 <template>
     <Page class="page">
-        <ActionBar class="action-bar">
-            <Span text="Ert" style="color: blue;" />
-            <Span text="FLIX" style="color: red;" />
-        </ActionBar>
+        <ActionBar title="ErtFLIX" class="action-bar" />
         <ScrollView class="anim-images" orientation="vertical">
         <StackLayout orientation="vertical">
             <Label text="Ταινίες" class="h2" />
