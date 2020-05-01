@@ -1,8 +1,18 @@
 <template>
     <Page class="page">
-        <ActionBar title="ErtFLIX" class="action-bar" />
-        <ScrollView class="anim-images" orientation="vertical">
-        <StackLayout orientation="vertical">
+        <ActionBar class="action-bar" title=" " android.icon="res://icon" android.iconVisibility="always"></ActionBar>
+        <ScrollView  orientation="vertical">
+        <StackLayout v-if="ok" orientation="vertical">
+        <GridLayout columns="50,250,*" rows="auto" >
+             <Image row="0" col="0" colSpan="3" :src="'http://hbbtv.ert.gr/pub/smarttv/ert/'+movies[idx].backgroundIcon" loadMode="async" horizontalAlignment="right" stretch="fill"  /> 
+             <!-- <Image row="0" col="0" colSpan="3" :src="movies[0].org" loadMode="async" opacity="0.5" stretch="aspectFit"  /> -->
+             <StackLayout row="0" col="0" colSpan="2" class="stdown">
+                <Label class="h4" :text="movies[idx].title" style="color: white;" />
+                <Label class="desc" :text="'Διάρκεια: '+movies[idx].dur" style="color: white;" />
+                <Label class="desc" :text="movies[idx].short_desc" row="0" col="0" colSpan="2" textWrap="True" />
+                <Label class="dm" :text="'Διαθέσιμο μέχρι: '+movies[idx].expiration_date"  />
+            </StackLayout>
+        </GridLayout>
             <Label text="Ταινίες" class="h2" />
             <ScrollView class="anim-images" orientation="horizontal">
                 <StackLayout orientation="horizontal" class="">
@@ -114,7 +124,7 @@
             }, 
             onItemTap5: function(args) {
                 console.log("Item with index: " + args + " tapped");
-                this.$goto('Movie', {
+                this.$goto('News', {
                     animated: true,
                     transition: {
                         name: "slideLeft",
@@ -136,6 +146,8 @@
                 method: "GET",
                 }).then(response => {
                 this.movies = response.content.toJSON().items;
+                this.idx = Math.floor(Math.random() * this.movies.length);
+                this.ok = true;
                 }, error => {
                 console.error(error);
                 });
@@ -162,7 +174,8 @@
                 this.paidika = response.content.toJSON().services[4].items;
                 }, error => {
                 console.error(error);
-                });                
+                });
+              
         },        
         data() {
             return {
@@ -171,6 +184,8 @@
                 documentaries: [ ],
                 enimerosi: [ ],
                 paidika: [ ],
+                idx: 0,
+                ok: false,
             };
         }
     };
@@ -198,5 +213,50 @@
     }
     .card-layout .h1 {
         margin-bottom: 15;
+    }
+    .page {
+    background-color: #000000;
+    }
+    .action-bar {
+    color: royalblue;
+    background-color: #000000;
+    }    
+
+.dm{
+    margin-top: 10px;
+    color: red;
+}
+.desc{
+    margin-top: 10px;
+    color: whitesmoke;
+}
+    .h1 {
+    font-size: 36;
+    margin-top: 10px;
+    color: #ffffff;
+    }
+    
+    .h2 {
+    font-size: 30;
+    margin-top: 10px;
+    color: #ffffff;    
+    }
+    
+    .h3 {
+    font-size: 24;
+    }
+    
+    .h4 {
+    font-size: 18;
+    margin-top: 100px;
+    color: #ffffff;
+    }
+    
+    .h5 {
+    font-size: 14;
+    }
+    
+    .h6 {
+    font-size: 12;
     }
 </style>

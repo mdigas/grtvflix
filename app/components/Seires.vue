@@ -1,18 +1,19 @@
 <template>
-    <Page class="page" >
-        <ActionBar title="ErtFLIX" class="action-bar" >
-          <NavigationButton text="Go back" android.systemIcon="ic_menu_back" @tap="$navigateBack" />
+    <Page class="page">
+        <ActionBar class="action-bar" title=" " android.icon="res://icon" android.iconVisibility="always">
+                  <NavigationButton text="Go back" android.systemIcon="ic_menu_back" @tap="$navigateBack" />
         </ActionBar>
-        <ScrollView> 
+        <ScrollView :style="bcpage">   
+            <NavigationButton text="Go back" android.systemIcon="ic_menu_back" @tap="$navigateBack" />
             <StackLayout orientation="vertical">
                 <GridLayout columns="50,250,auto" rows="auto,auto" >
-                    <Image row="0" col="0" colSpan="3" :src="'http://hbbtv.ert.gr'+mv.bg_img_url" stretch="aspectFill" />
+                    <Label row="0" col="0" colSpan="3" class="h4" :text="bcimage" style="color: white;" />
                     <StackLayout row="0" col="0" colSpan="2" class="stdown">
                         <HtmlView class="h4" :html="mv.title" style="color: white;" />
                         <HtmlView class="h4" :html="mv.short_desc" style="color: white;" />
                     </StackLayout>             
                 </GridLayout>
-                <ScrollView orientation="horizontal">
+                <ScrollView orientation="horizontal" class="keno" >
                     <StackLayout orientation="horizontal" >
                         <GridLayout  v-for="(episode, index) in episodes" rows="auto, auto" columns="auto"  @tap="onTapPlay(index)" >
                             <Image row="0" col="0" :src="episode.image" class="card"  loadMode="async" stretch="aspectFill"  />
@@ -61,7 +62,14 @@
             return {
                 mv: this.$props.seira,
                 episodes: [],
-            };
+                bcpage: {
+                    'backgroud-color': 'black',
+                    'background-image': 'url("http://hbbtv.ert.gr'+this.$props.seira.bg_img_url+'")',
+                    'background-repeat': 'no-repeat',
+                    'background-position': 'right top',
+                    'background-size': 'auto',
+                    },
+            };                
         },
         
     };
@@ -89,4 +97,18 @@
     color: whitesmoke;
 }
 
+.card {
+        height: 169px; 
+        width: 300px;
+        background-color: #181616;
+        color: #4d4d4d;
+        padding: 5;
+ }
+.keno{
+    margin-top: 150px;
+}
+.action-bar {
+    color: royalblue;
+    background-color: #000000;
+    }   
 </style>

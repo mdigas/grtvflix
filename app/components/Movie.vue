@@ -1,19 +1,17 @@
 <template>
     <Page class="page" >
-        <ActionBar title="ErtFLIX" class="action-bar" >
-          <NavigationButton text="Go back" android.systemIcon="ic_menu_back" @tap="$navigateBack" />
-        </ActionBar>   
-        <ScrollView> 
+        <ActionBar class="action-bar" title=" " android.icon="res://icon" android.iconVisibility="always">
+                  <NavigationButton text="Go back" android.systemIcon="ic_menu_back" @tap="$navigateBack" />
+        </ActionBar>  
+        <ScrollView :style="bcpage"> 
         <StackLayout orientation="vertical">
         <GridLayout columns="50,250,auto" rows="auto" >
-            <Image  v-if="mv.backgroundIcon" row="0" col="0" colSpan="3" :src="'http://hbbtv.ert.gr//pub//smarttv//ert/'+mv.backgroundIcon" stretch="aspectFill" />
-            <Image  v-if="mv.bg_img_url" row="0" col="0" colSpan="3" :src="mv.bg_img_url" stretch="aspectFill" />
-            <StackLayout row="0" col="0" colSpan="2" class="stdown">
+             <StackLayout row="0" col="0" colSpan="2" class="stdown">
                 <Label class="h4" :text="mv.title" style="color: white;" />
-                <Label class="desc" :text="'Διάρκεια: '+mv.dur"  />
+                <Label class="desc" :text="'Διάρκεια: '+mv.dur" style="color: white;" />
                 <Label class="desc" :text="mv.short_desc" row="0" col="0" colSpan="2" textWrap="True" />
                 <Label class="dm" :text="'Διαθέσιμο μέχρι: '+mv.expiration_date"  />
-                <GridLayout columns="auto,20,auto" rows="auto" >
+                <GridLayout columns="auto,20,auto" rows="auto" class="keno" >
                     <Button row="0" col="0" class="lbl" text="" @tap="onItemTap" >    
                         <FormattedString><Span text="Προβολή" ></Span></FormattedString>
                     </Button>
@@ -42,7 +40,6 @@
             },
             onmoreTap: function(args) {
                 console.log("Item with index: " + args + " tapped");
-                console.log(this.mv.desc);
                 this.$goto('MovieDetail', {
                     animated: true,
                     transition: {
@@ -60,9 +57,22 @@
 
         props: ["movie"],
 
+        computed: {
+             bcimage: function () {
+                return this.$props.movie.idnam == 'enimerosi' ? this.$props.movie.bg_img_url : this.$props.movie.backgroundIcon;
+            },
+        }, 
+        
         data() {
             return {
-                mv: this.$props.movie
+                mv: this.$props.movie, 
+                bcpage: {
+                    'backgroud-color': 'black',
+                    'background-image': 'url("http://hbbtv.ert.gr/pub/smarttv/ert/'+this.$props.movie.backgroundIcon+'")',
+                    'background-repeat': 'no-repeat',
+                    'background-position': 'right top',
+                    'background-size': 'auto',
+                    },
             };
         },
         
@@ -88,6 +98,12 @@
 .desc{
     margin-top: 10px;
     color: whitesmoke;
+}
+    .page {
+    background-color: #000000;
+    }
+.keno{
+    margin-top: 150px;
 }
 
 </style>
