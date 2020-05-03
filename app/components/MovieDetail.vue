@@ -5,7 +5,7 @@
         </ActionBar>
         <ScrollView>
             <StackLayout orientation="vertical">
-               <WebView :src="starthtml+$props.detail+endhtml" style="background-color: black;" />	
+               <WebView :src="starthtml+$props.detail+endhtml" class="page" />	
             </StackLayout>  
         </ScrollView>
     </Page>         

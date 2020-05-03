@@ -19,3 +19,90 @@
     font-family: "Font Awesome 5 Free", "fa-regular-400";
     font-weight: 400;
 }
+
+//Custom
+.page {
+    background-color: #000000;
+}
+
+.action-bar {
+    color: #ffffff;
+    font-size: 24;
+    background-color: #000000;
+}    
+
+.card {
+    background-color: #000000;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.dm{
+    margin-top: 10px;
+    color: red;
+}
+.diar{
+    margin-top: 10px;
+    color: blue;
+}
+
+.desc{
+    margin-top: 10px;
+    color: #ffffff;    
+}
+
+.stdown{
+    margin-top: 250px;
+    margin-left: 50px;
+    }
+
+.lbl{
+    color: #E99935;
+    background-color: #000000;
+    margin-top: 10px;
+    margin-left: 10px;
+    border-width: 4;
+    border-color: #E99935;
+    border-style: solid;
+    }
+
+.keno{
+    margin-top: 150px;
+}
+
+.h1 {
+    font-size: 36;
+    margin-top: 10px;
+    color: #ffffff;
+}
+    
+.h2 {
+    font-size: 30;
+    margin-top: 10px;
+    color: #ffffff;    
+}
+    
+.h3 {
+    font-size: 24;
+    color: #ffffff;
+}
+    
+.h4 {
+    font-size: 18;
+    margin-top: 100px;
+    color: #ffffff;
+}
+
+.h4menu{
+    font-size: 18;
+    color: #ffffff;
+}
+    
+.h5 {
+    font-size: 14;
+    color: #ffffff;
+}
+    
+.h6 {
+    font-size: 12;
+}

@@ -1,0 +1,63 @@
+<template>
+    <Page class="page" >
+        <ActionBar class="action-bar" title=" " android.icon="res://icon" android.iconVisibility="always">
+                  <NavigationButton text="Go back" android.systemIcon="ic_menu_back" @tap="$navigateBack" />
+        </ActionBar>  
+        <ScrollView> 
+        <StackLayout orientation="vertical">
+        <GridLayout columns="*,*" rows="*,*,*,*,*" >
+            <Image row="0" col="0" class="livetv" src="~/img/ert1.png" @tap="onItemTap(0)" />
+            <Image row="1" col="0" class="livetv" src="~/img/ert2.png" @tap="onItemTap(1)" />
+            <Image row="2" col="0" class="livetv" src="~/img/ert3.png" @tap="onItemTap(2)"/>
+            <Image row="3" col="0" class="livetv" src="~/img/ertsport.png" @tap="onItemTap(3)"/>
+            <Image row="4" col="0" class="livetv" src="~/img/ertworld.png" @tap="onItemTap(4)" />
+            <Image row="0" col="1" class="livetv" src="~/img/ertplay1.png" @tap="onItemTap(5)" />
+            <Image row="1" col="1" class="livetv" src="~/img/ertplay2.png" @tap="onItemTap(6)" />
+            <Image row="2" col="1" class="livetv" src="~/img/ertplay3.png" @tap="onItemTap(7)" />
+            <Image row="3" col="1" class="livetv" src="~/img/ertplay4.png" @tap="onItemTap(8)" />
+            <Image row="4" col="1" class="livetv" src="~/img/ertplay5.png" @tap="onItemTap(9)" />
+        </GridLayout>
+        </StackLayout>      
+        </ScrollView>
+    </Page>
+</template>
+
+<script>
+    var utilsModule = require("tns-core-modules/utils/utils");
+    import * as application from 'application';
+    export default {
+        methods: {
+            onItemTap: function(args) {
+                if (args == 2){
+                    const i = new android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse("vnd.youtube://" + this.videourl[args]));
+                    application.android.foregroundActivity.startActivity(i);
+                }else{
+                    const i = new android.content.Intent(android.content.Intent.ACTION_VIEW);
+                    //i.setDataAndType(android.net.Uri.parse(videourl[args]), "video/mp4");
+                    i.setDataAndType(android.net.Uri.parse(this.videourl[args]), "video/mp4");
+                    application.android.foregroundActivity.startActivity(i);
+                }
+            },     
+        },
+        
+        data() {
+            return {
+                videourl:[
+                    "https://ert-live.siliconweb.com/media/ert_1/ert_1.m3u8",
+                    "https://ert-live.siliconweb.com/media/ert_2/ert_2.m3u8",
+                    "F_jfMlJiDcc",
+                    "https://ert-live.siliconweb.com/media/ert_sports/ert_sportshigh.m3u8",
+                    "https://ert-live.siliconweb.com/media/ert_world/ert_world.m3u8",
+                    "https://ert-live.siliconweb.com/media/ert_play_1/ert_play_1.m3u8",
+                    "https://ert-live.siliconweb.com/media/ert_play_2/ert_play_2.m3u8",
+                    "https://ert-live.siliconweb.com/media/ert_play_3/ert_play_3.m3u8",
+                    "https://ert-live.siliconweb.com/media/ert_play_4/ert_play_4.m3u8",
+                    "https://ert-live.siliconweb.com/media/ert_play_5/ert_play_5.m3u8",
+
+                ]
+          
+            };
+        },
+        
+    };
+</script>

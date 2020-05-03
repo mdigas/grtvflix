@@ -8,7 +8,7 @@
         <GridLayout columns="50,250,auto" rows="auto" >
              <StackLayout row="0" col="0" colSpan="2" class="stdown">
                 <Label class="h4" :text="mv.title" style="color: white;" />
-                <Label class="desc" :text="'Διάρκεια: '+mv.dur" style="color: white;" />
+                <Label class="diar" :text="'Διάρκεια: '+mv.dur" style="color: white;" />
                 <Label class="desc" :text="mv.short_desc" row="0" col="0" colSpan="2" textWrap="True" />
                 <Label class="dm" :text="'Διαθέσιμο μέχρι: '+mv.expiration_date"  />
                 <GridLayout columns="auto,20,auto" rows="auto" class="keno" >
@@ -55,13 +55,7 @@
             },      
         },
 
-        props: ["movie"],
-
-        computed: {
-             bcimage: function () {
-                return this.$props.movie.idnam == 'enimerosi' ? this.$props.movie.bg_img_url : this.$props.movie.backgroundIcon;
-            },
-        }, 
+        props: ["movie"], 
         
         data() {
             return {
@@ -78,32 +72,3 @@
         
     };
 </script>
-<style>
-.stdown{
-    margin-top: 250px;
-    margin-left: 50px;
-    }
-
-.lbl{
-    color: #E99935;
-    margin-top: 10px;
-    border-width: 4;
-    border-color: #E99935;
-    border-style: solid;
-    }
-.dm{
-    margin-top: 10px;
-    color: red;
-}
-.desc{
-    margin-top: 10px;
-    color: whitesmoke;
-}
-    .page {
-    background-color: #000000;
-    }
-.keno{
-    margin-top: 150px;
-}
-
-</style>

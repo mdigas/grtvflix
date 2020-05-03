@@ -7,7 +7,7 @@
             <NavigationButton text="Go back" android.systemIcon="ic_menu_back" @tap="$navigateBack" />
             <StackLayout orientation="vertical">
                 <GridLayout columns="50,250,auto" rows="auto,auto" >
-                    <Label row="0" col="0" colSpan="3" class="h4" :text="bcimage" style="color: white;" />
+                    <Label row="0" col="0" colSpan="3" class="h4" style="color: white;" />
                     <StackLayout row="0" col="0" colSpan="2" class="stdown">
                         <HtmlView class="h4" :html="mv.title" style="color: white;" />
                         <HtmlView class="h4" :html="mv.short_desc" style="color: white;" />
@@ -15,7 +15,7 @@
                 </GridLayout>
                 <ScrollView orientation="horizontal" class="keno" >
                     <StackLayout orientation="horizontal" >
-                        <GridLayout  v-for="(episode, index) in episodes" rows="auto, auto" columns="auto"  @tap="onTapPlay(index)" >
+                        <GridLayout  v-for="(episode, index) in episodes" rows="156, auto" columns="277"  @tap="onTapPlay(index)" >
                             <Image row="0" col="0" :src="episode.image" class="card"  loadMode="async" stretch="aspectFill"  />
                             <Label class="lbl" row="1" col="0" :text="'Σ'+episode.season_num+'E'+episode.episode_num+'   Διαθ.Μέχρι: '+episode.expiration_date" />
                         </GridLayout>
@@ -74,41 +74,3 @@
         
     };
 </script>
-<style>
-.stdown{
-    margin-top: 250px;
-    margin-left: 50px;
-    }
-
-.lbl{
-    color: #E99935;
-    margin-top: 10px;
-    margin-left: 10px;
-    border-width: 4;
-    border-color: #E99935;
-    border-style: solid;
-    }
-.dm{
-    margin-top: 10px;
-    color: red;
-}
-.desc{
-    margin-top: 10px;
-    color: whitesmoke;
-}
-
-.card {
-        height: 169px; 
-        width: 300px;
-        background-color: #181616;
-        color: #4d4d4d;
-        padding: 5;
- }
-.keno{
-    margin-top: 150px;
-}
-.action-bar {
-    color: royalblue;
-    background-color: #000000;
-    }   
-</style>

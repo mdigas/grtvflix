@@ -1,6 +1,12 @@
 <template>
     <Page class="page">
-        <ActionBar class="action-bar" title=" " android.icon="res://icon" android.iconVisibility="always"></ActionBar>
+        <ActionBar class="action-bar" title=" " android.icon="res://icon" android.iconVisibility="always">
+        <StackLayout orientation="horizontal">
+            <Label text=" LiveTV " class="h4menu" @tap="onLiveTap()" />
+            <Label text=" Αρχείο " class="h4menu" @tap="onArchiveTap()" />
+            <Label text=" Μαθαίνουμε Σπίτι " class="h4menu" @tap="onMenoumeTap()" />
+        </StackLayout>
+        </ActionBar>
         <ScrollView  orientation="vertical">
         <StackLayout v-if="ok" orientation="vertical">
         <GridLayout columns="50,250,*" rows="auto" >
@@ -8,47 +14,47 @@
              <!-- <Image row="0" col="0" colSpan="3" :src="movies[0].org" loadMode="async" opacity="0.5" stretch="aspectFit"  /> -->
              <StackLayout row="0" col="0" colSpan="2" class="stdown">
                 <Label class="h4" :text="movies[idx].title" style="color: white;" />
-                <Label class="desc" :text="'Διάρκεια: '+movies[idx].dur" style="color: white;" />
+                <Label class="diar" :text="'Διάρκεια: '+movies[idx].dur" style="color: white;" />
                 <Label class="desc" :text="movies[idx].short_desc" row="0" col="0" colSpan="2" textWrap="True" />
                 <Label class="dm" :text="'Διαθέσιμο μέχρι: '+movies[idx].expiration_date"  />
             </StackLayout>
         </GridLayout>
             <Label text="Ταινίες" class="h2" />
-            <ScrollView class="anim-images" orientation="horizontal">
-                <StackLayout orientation="horizontal" class="">
-                    <GridLayout v-for="(movie, index) in movies" rows="auto, auto" columns="auto" @tap="onItemTap1(index)" >
+            <ScrollView orientation="horizontal">
+                <StackLayout orientation="horizontal" >
+                    <GridLayout v-for="(movie, index) in movies" rows="156" columns="277" @tap="onItemTap1(index)" >
                         <Image row="0" col="0" :src="movie.image" class="card"  loadMode="async" stretch="aspectFill"  />
                     </GridLayout>
                 </StackLayout>
             </ScrollView>                  
-            <Label text="Σείρες" class="h2" />
-            <ScrollView class="anim-images" orientation="horizontal">
-                <StackLayout orientation="horizontal" class="">
-                    <GridLayout v-for="(seira, indexs) in seires" rows="auto, auto" columns="auto" @tap="onItemTap2(indexs)">
+            <Label text="Σειρές" class="h2" />
+            <ScrollView orientation="horizontal">
+                <StackLayout orientation="horizontal" >
+                    <GridLayout v-for="(seira, indexs) in seires" rows="156" columns="277" @tap="onItemTap2(indexs)">
                         <Image row="0" col="0" :src="'http://hbbtv.ert.gr'+seira.menu_img_url" class="card" loadMode="async" stretch="aspectFill"  />
                     </GridLayout>
                 </StackLayout>
             </ScrollView>
             <Label text="Ντοκιμαντέρ" class="h2" />
-            <ScrollView class="anim-images" orientation="horizontal">
-                <StackLayout orientation="horizontal" class="">
-                    <GridLayout v-for="(doc, indexd) in documentaries" rows="auto, auto" columns="auto" @tap="onItemTap3(indexd)" >
+            <ScrollView orientation="horizontal">
+                <StackLayout orientation="horizontal" >
+                    <GridLayout v-for="(doc, indexd) in documentaries" rows="156" columns="277" @tap="onItemTap3(indexd)" >
                         <Image row="0" col="0" :src="'http://hbbtv.ert.gr'+doc.menu_img_url" class="card" loadMode="async" stretch="aspectFill"  />
                     </GridLayout>
                 </StackLayout>
             </ScrollView>
             <Label text="Ενημέρωση" class="h2" />
-            <ScrollView class="anim-images" orientation="horizontal">
-                <StackLayout orientation="horizontal" class="">
-                    <GridLayout v-for="(enim, indexe) in enimerosi" rows="auto, auto" columns="auto"  @tap="onItemTap5(indexe)">
+            <ScrollView orientation="horizontal">
+                <StackLayout orientation="horizontal" >
+                    <GridLayout v-for="(enim, indexe) in enimerosi" rows="156" columns="277"  @tap="onItemTap5(indexe)">
                         <Image row="0" col="0" :src="enim.image" class="card" loadMode="async" stretch="aspectFill"  />
                     </GridLayout>
                 </StackLayout>
             </ScrollView> 
             <Label text="Παιδικά" class="h2" />                        
-            <ScrollView class="anim-images" orientation="horizontal">
-                <StackLayout orientation="horizontal" class="">
-                    <GridLayout v-for="(paid, indexp) in paidika" rows="auto, auto" columns="auto" @tap="onItemTap4(indexp)" >
+            <ScrollView orientation="horizontal">
+                <StackLayout orientation="horizontal" >
+                    <GridLayout v-for="(paid, indexp) in paidika" rows="156" columns="277" @tap="onItemTap4(indexp)" >
                         <Image row="0" col="0" :src="'http://hbbtv.ert.gr'+paid.menu_img_url" class="card" loadMode="async" stretch="aspectFill"  />
                     </GridLayout>
                 </StackLayout>
@@ -62,6 +68,39 @@
     import * as http from "http";
     export default {
         methods: {
+            onLiveTap: function() {
+                this.$goto('LiveTV', {
+                    animated: true,
+                    transition: {
+                        name: "slideLeft",
+                        duration: 250,
+                        curve: "easeIn"},
+                    transitioniOS: {},
+                    transitionAndroid: {},
+                });
+            },
+            onArchiveTap: function() {
+                this.$goto('Archive', {
+                    animated: true,
+                    transition: {
+                        name: "slideLeft",
+                        duration: 250,
+                        curve: "easeIn"},
+                    transitioniOS: {},
+                    transitionAndroid: {},
+                });
+            },  
+            onMenoumeTap: function() {
+                this.$goto('MenoumeSp', {
+                    animated: true,
+                    transition: {
+                        name: "slideLeft",
+                        duration: 250,
+                        curve: "easeIn"},
+                    transitioniOS: {},
+                    transitionAndroid: {},
+                });
+            },                      
             onItemTap1: function(args) {
                 console.log("Item with index: " + args + " tapped");
                 this.$goto('Movie', {
@@ -190,73 +229,3 @@
         }
     };
 </script>
-
-<style scoped>
-    .home-panel {
-        vertical-align: center;
-        font-size: 20;
-        margin: 15;
-    }
-
-    .description-label {
-        margin-bottom: 15;
-    }
-    .card {
-        height: 169px; 
-        width: 300px;
-        background-color: #181616;
-        color: #4d4d4d;
-        padding: 5;
-    }
-    .card-layout {
-        padding: 20;
-    }
-    .card-layout .h1 {
-        margin-bottom: 15;
-    }
-    .page {
-    background-color: #000000;
-    }
-    .action-bar {
-    color: royalblue;
-    background-color: #000000;
-    }    
-
-.dm{
-    margin-top: 10px;
-    color: red;
-}
-.desc{
-    margin-top: 10px;
-    color: whitesmoke;
-}
-    .h1 {
-    font-size: 36;
-    margin-top: 10px;
-    color: #ffffff;
-    }
-    
-    .h2 {
-    font-size: 30;
-    margin-top: 10px;
-    color: #ffffff;    
-    }
-    
-    .h3 {
-    font-size: 24;
-    }
-    
-    .h4 {
-    font-size: 18;
-    margin-top: 100px;
-    color: #ffffff;
-    }
-    
-    .h5 {
-    font-size: 14;
-    }
-    
-    .h6 {
-    font-size: 12;
-    }
-</style>
