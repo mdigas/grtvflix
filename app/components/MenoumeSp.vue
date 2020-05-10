@@ -3,20 +3,20 @@
         <ActionBar class="action-bar" title=" " android.icon="res://icon" android.iconVisibility="always">
                   <NavigationButton text="Go back" android.systemIcon="ic_menu_back" @tap="$navigateBack" />
         </ActionBar>  
+        <ScrollView orientation="vertical">
         <StackLayout orientation="vertical">
             <Image src="~/img/menoume.png" loadMode="async" />
-            <ScrollView orientation="horizontal" > 
-            <GridLayout columns="auto,auto,auto" rows="auto,auto,auto" >
-                <Image row="0" col="0" src="http://hbbtv.ert.gr/pub/smarttv/ert/img/a-class_focus.png" loadMode="async" stretch="aspectFill" @tap="onItemTap(0)" />
-                <Image row="0" col="1" src="http://hbbtv.ert.gr/pub/smarttv/ert/img/b-class_focus.png" loadMode="async" stretch="aspectFill" @tap="onItemTap(1)" />
-                <Image row="0" col="2" src="http://hbbtv.ert.gr/pub/smarttv/ert/img/c-class_focus.png" loadMode="async" stretch="aspectFill" @tap="onItemTap(2)"/>
-                <Image row="1" col="0" src="http://hbbtv.ert.gr/pub/smarttv/ert/img/d-class_focus.png" loadMode="async" stretch="aspectFill" @tap="onItemTap(3)"/>
-                <Image row="1" col="1" src="http://hbbtv.ert.gr/pub/smarttv/ert/img/e-class_focus.png" loadMode="async" stretch="aspectFill" @tap="onItemTap(4)" />
-                <Image row="1" col="2" src="http://hbbtv.ert.gr/pub/smarttv/ert/img/st-class_focus.png" loadMode="async" stretch="aspectFill" @tap="onItemTap(5)" />
-                <Image row="2" col="1" src="http://hbbtv.ert.gr/pub/smarttv/ert/img/istoriesON.png" loadMode="async" stretch="aspectFill" @tap="onItemTap(6)" />
-            </GridLayout>
-            </ScrollView>
-        </StackLayout>      
+            <WrapLayout>
+                <Image src="http://hbbtv.ert.gr/pub/smarttv/ert/img/a-class_focus.png" width="315" height="165" loadMode="async" @tap="onItemTap(0)" />
+                <Image src="http://hbbtv.ert.gr/pub/smarttv/ert/img/b-class_focus.png" width="315" height="165" loadMode="async"  @tap="onItemTap(1)" />
+                <Image src="http://hbbtv.ert.gr/pub/smarttv/ert/img/c-class_focus.png" width="315" height="165" loadMode="async"  @tap="onItemTap(2)" />
+                <Image src="http://hbbtv.ert.gr/pub/smarttv/ert/img/d-class_focus.png" width="315" height="165" loadMode="async" @tap="onItemTap(3)" />
+                <Image src="http://hbbtv.ert.gr/pub/smarttv/ert/img/e-class_focus.png" width="315" height="165" loadMode="async" @tap="onItemTap(4)" />
+                <Image src="http://hbbtv.ert.gr/pub/smarttv/ert/img/st-class_focus.png" width="315" height="165" loadMode="async" @tap="onItemTap(5)" />
+                <Image src="http://hbbtv.ert.gr/pub/smarttv/ert/img/istoriesON.png" width="315" height="165" loadMode="async" @tap="onItemTap(6)" />
+            </WrapLayout>
+        </StackLayout>   
+        </ScrollView>           
     </Page>
 </template>
 

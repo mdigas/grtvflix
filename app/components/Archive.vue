@@ -6,9 +6,9 @@
         <ScrollView>   
             <StackLayout v-if="ok" orientation="vertical">
                 <GridLayout columns="50,250,*" rows="auto" >
-                    <Image row="0" col="3" colSpan="3" :src="archives[idx].backgroundIcon" loadMode="async" horizontalAlignment="right" stretch="aspectFill"  /> 
-                    <StackLayout row="0" col="0" colSpan="2" class="stdown">
-                        <HtmlView class="h4" :html="archives[idx].title" style="color: white;" />
+                    <Image row="0" col="3" colSpan="3" :src="archives[idx].backgroundIcon" loadMode="async" horizontalAlignment="right" stretch="aspectFit"  /> 
+                    <StackLayout row="0" col="0" colSpan="2" >
+                        <HtmlView class="h3" :html="archives[idx].title" style="color: white;" />
                         <HtmlView class="h4" :html="archives[idx].short_desc" style="color: white;" />
                     </StackLayout> 
                 </GridLayout>                

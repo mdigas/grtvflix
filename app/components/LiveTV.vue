@@ -2,23 +2,21 @@
     <Page class="page" >
         <ActionBar class="action-bar" title=" " android.icon="res://icon" android.iconVisibility="always">
                   <NavigationButton text="Go back" android.systemIcon="ic_menu_back" @tap="$navigateBack" />
-        </ActionBar>  
-        <ScrollView> 
-        <StackLayout orientation="vertical">
-        <GridLayout columns="*,*" rows="*,*,*,*,*" >
-            <Image row="0" col="0" class="livetv" src="~/img/ert1.png" @tap="onItemTap(0)" />
-            <Image row="1" col="0" class="livetv" src="~/img/ert2.png" @tap="onItemTap(1)" />
-            <Image row="2" col="0" class="livetv" src="~/img/ert3.png" @tap="onItemTap(2)"/>
-            <Image row="3" col="0" class="livetv" src="~/img/ertsport.png" @tap="onItemTap(3)"/>
-            <Image row="4" col="0" class="livetv" src="~/img/ertworld.png" @tap="onItemTap(4)" />
-            <Image row="0" col="1" class="livetv" src="~/img/ertplay1.png" @tap="onItemTap(5)" />
-            <Image row="1" col="1" class="livetv" src="~/img/ertplay2.png" @tap="onItemTap(6)" />
-            <Image row="2" col="1" class="livetv" src="~/img/ertplay3.png" @tap="onItemTap(7)" />
-            <Image row="3" col="1" class="livetv" src="~/img/ertplay4.png" @tap="onItemTap(8)" />
-            <Image row="4" col="1" class="livetv" src="~/img/ertplay5.png" @tap="onItemTap(9)" />
-        </GridLayout>
-        </StackLayout>      
-        </ScrollView>
+        </ActionBar>
+        <ScrollView>
+        <WrapLayout>
+            <Image class="livetv" src="~/img/ert1.png" @tap="onItemTap(0)" />
+            <Image class="livetv" src="~/img/ert2.png" @tap="onItemTap(1)" />
+            <Image class="livetv" src="~/img/ert3.png" @tap="onItemTap(2)"/>
+            <Image class="livetv" src="~/img/ertsport.png" @tap="onItemTap(3)"/>
+            <Image class="livetv" src="~/img/ertworld.png" @tap="onItemTap(4)" />
+            <Image class="livetv" src="~/img/ertplay1.png" @tap="onItemTap(5)" />
+            <Image class="livetv" src="~/img/ertplay2.png" @tap="onItemTap(6)" />
+            <Image class="livetv" src="~/img/ertplay3.png" @tap="onItemTap(7)" />
+            <Image class="livetv" src="~/img/ertplay4.png" @tap="onItemTap(8)" />
+            <Image class="livetv" src="~/img/ertplay5.png" @tap="onItemTap(9)" />
+         </WrapLayout>
+        </ScrollView>  
     </Page>
 </template>
 
