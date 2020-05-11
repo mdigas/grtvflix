@@ -9,7 +9,7 @@
              <StackLayout row="0" col="0" colSpan="2" class="stdown">
                 <Label class="h4" :text="mv.title" style="color: white;" />
                 <Label class="diar" :text="'Διάρκεια: '+mv.dur" style="color: white;" />
-                <Label class="desc" :text="mv.short_desc" row="0" col="0" colSpan="2" textWrap="True" />
+                <HtmlView class="h4" :html="mv.short_desc" style="color: white;" />
                 <Label class="dm" :text="'Διαθέσιμο μέχρι: '+mv.expiration_date"  />
                 <GridLayout columns="auto,20,auto" rows="auto" class="keno" >
                     <Button row="0" col="0" class="lbl" text="" @tap="onItemTap" >    
@@ -62,7 +62,7 @@
                 mv: this.$props.movie, 
                 bcpage: {
                     'backgroud-color': 'black',
-                    'background-image': 'url("http://hbbtv.ert.gr/pub/smarttv/ert/'+this.$props.movie.backgroundIcon+'")',
+                    'background-image': 'url("'+this.$props.movie.bg_img_url+'")',
                     'background-repeat': 'no-repeat',
                     'background-position': 'right top',
                     'background-size': 'auto',

@@ -10,7 +10,7 @@
         <ScrollView  orientation="vertical">
         <StackLayout v-if="ok" orientation="vertical">
         <GridLayout columns="50,250,*" rows="auto" >
-             <Image row="0" col="0" colSpan="3" :src="'http://hbbtv.ert.gr/pub/smarttv/ert/'+movies[idx].backgroundIcon" loadMode="async" horizontalAlignment="right" stretch="fill"  /> 
+             <Image row="0" col="0" colSpan="3" :src="movies[idx].bg_img_url" loadMode="async" horizontalAlignment="right" stretch="fill"  /> 
              <!-- <Image row="0" col="0" colSpan="3" :src="movies[0].org" loadMode="async" opacity="0.5" stretch="aspectFit"  /> -->
              <StackLayout row="0" col="0" colSpan="2" class="stdown">
                 <Label class="h4" :text="movies[idx].title" style="color: white;" />
@@ -178,13 +178,13 @@
             },                                  
         },
         created: function() {
-            var url="http://hbbtv.ert.gr/pub/smarttv/ert/feed_movies.php";
+            var url="http://hbbtv.ert.gr/pub/smarttv/ert/getFeedContent.php?categoryIdnam=tainies";
 
             http.request({
                 url: url,
                 method: "GET",
                 }).then(response => {
-                this.movies = response.content.toJSON().items;
+                this.movies = response.content.toJSON().elems[0].items;
                 this.idx = Math.floor(Math.random() * this.movies.length);
                 this.ok = true;
                 }, error => {
