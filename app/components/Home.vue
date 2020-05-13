@@ -1,13 +1,13 @@
 <template>
     <Page class="page">
         <ActionBar class="action-bar" title=" " android.icon="res://icon" android.iconVisibility="always">
-        <StackLayout orientation="horizontal">
+        <WrapLayout orientation="horizontal">
             <Label text=" LiveTV " class="h4menu" @tap="onLiveTap()" />
             <Label text=" Αρχείο " class="h4menu" @tap="onArchiveTap()" />
             <Label text=" Μαθαίνουμε Σπίτι " class="h4menu" @tap="onMenoumeTap()" />
             <Label text.decode="&#xf002;" class="nt-icon fas" @tap="onSearchTap()" />
             <Label text.decode="&#xf073;" class="nt-icon fas" @tap="onBrowseTap()" />
-        </StackLayout>
+        </WrapLayout>
         </ActionBar>
         <ScrollView  orientation="vertical">
         <StackLayout v-if="ok" orientation="vertical">
