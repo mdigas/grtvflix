@@ -17,7 +17,11 @@
                     <StackLayout orientation="horizontal" >
                         <GridLayout  v-for="(episode, index) in episodes" rows="156, auto" columns="277"  @tap="onTapPlay(index)" >
                             <Image row="0" col="0" :src="episode.image" class="card"  loadMode="async" stretch="aspectFill"  />
-                            <Label class="lbl" row="1" col="0" :text="'Σ'+episode.season_num+'E'+episode.episode_num+'   Διαθ.Μέχρι: '+episode.expiration_date" />
+                            <Label class="lbl" row="1" col="0" ><FormattedString>
+                                <Span v-if="episode.season_num" :text="'Σ:'+episode.season_num" />
+                                <Span :text="'E:'+episode.episode_num" />
+                                <span :text="'   Διαθ.Μέχρι: '+episode.expiration_date" /></FormattedString>
+                            </Label>
                         </GridLayout>
                     </StackLayout>
                 </ScrollView>     

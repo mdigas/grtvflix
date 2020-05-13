@@ -5,6 +5,8 @@
             <Label text=" LiveTV " class="h4menu" @tap="onLiveTap()" />
             <Label text=" Αρχείο " class="h4menu" @tap="onArchiveTap()" />
             <Label text=" Μαθαίνουμε Σπίτι " class="h4menu" @tap="onMenoumeTap()" />
+            <Label text.decode="&#xf002;" class="nt-icon fas" @tap="onSearchTap()" />
+            <Label text.decode="&#xf073;" class="nt-icon fas" @tap="onBrowseTap()" />
         </StackLayout>
         </ActionBar>
         <ScrollView  orientation="vertical">
@@ -79,6 +81,28 @@
                     transitionAndroid: {},
                 });
             },
+            onSearchTap: function() {
+                this.$goto('Search', {
+                    animated: true,
+                    transition: {
+                        name: "slideLeft",
+                        duration: 250,
+                        curve: "easeIn"},
+                    transitioniOS: {},
+                    transitionAndroid: {},
+                });
+            },
+            onBrowseTap: function() {
+                this.$goto('Browse', {
+                    animated: true,
+                    transition: {
+                        name: "slideLeft",
+                        duration: 250,
+                        curve: "easeIn"},
+                    transitioniOS: {},
+                    transitionAndroid: {},
+                });
+            },                        
             onArchiveTap: function() {
                 this.$goto('Archive', {
                     animated: true,
@@ -229,3 +253,14 @@
         }
     };
 </script>
+<style scoped lang="scss">
+    // Start custom common variables
+    @import '~@nativescript/theme/scss/variables/blue';
+    // End custom common variables
+
+    // Custom styles
+    .nt-icon{
+        color: #ffffff;
+        font-size: 24;
+    }
+</style>
