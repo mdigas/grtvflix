@@ -4,8 +4,8 @@
     <!-- Application theme -->
     <style name="AppThemeBase21" parent="AppThemeBase">
         <item name="android:windowTranslucentStatus">true</item>
-	    <item name="android:textColorPrimary">@color/ns_white</item>
-	    <item name="android:textSize">30sp</item>        
+	<item name="android:textColorPrimary">@color/ns_white</item>
+	<item name="android:textSize">30sp</item>
         <item name="android:datePickerStyle">@style/SpinnerDatePicker</item>
         <item name="android:timePickerStyle">@style/SpinnerTimePicker</item>
     </style>

@@ -1,12 +1,17 @@
 <template>
     <Page class="page">
-        <ActionBar class="action-bar" title=" " android.icon="res://icon" android.iconVisibility="always">
-                  <NavigationButton text="Go back" android.systemIcon="ic_menu_back" @tap="$navigateBack" />
-        </ActionBar> 
-
+        <ActionBar class="action-bar">
+            <NavigationButton ios:visibility="collapsed" icon="res://menu" @tap="onDrawerButtonTap"></NavigationButton>
+            <ActionItem icon="res://menu" 
+                android:visibility="collapsed" 
+                @tap="onDrawerButtonTap"
+                ios.position="left">
+            </ActionItem>
+            <Label class="action-bar-title" text="Browse"></Label>
+        </ActionBar>
         <ScrollView>
             <StackLayout orientation="vertical">
-                <DatePicker :date="someDate" v-model="someDate" :minDate="minDate" class="date-picker" />
+                <DatePicker :date="someDate" v-model="someDate" class="date-picker" />
                 <WrapLayout>
                     <Button :class="'titem' + (selper === 'Morning' ? '-selected': '')" text="ΠΡΩΙ" @tap="onperTap(0)" />
                     <Button :class="'titem' + (selper === 'Midday' ? '-selected': '')" text="ΜΕΣΗΜΕΡΙ" @tap="onperTap(1)" />
@@ -30,13 +35,18 @@
     import * as http from "http";
     var utilsModule = require("tns-core-modules/utils/utils");
     import * as application from 'application'
+    import * as utils from "~/shared/utils";
+    import SelectedPageService from "../shared/selected-page-service";
 
     export default {
         mounted() {
+            SelectedPageService.getInstance().updateSelectedPage("Browse");
             this.someDate = new Date();
-            this.minDate = new Date(2019, 1, 1);
         },
         methods: {
+            onDrawerButtonTap() {
+                utils.showDrawer();
+            },
             onTapPlay: function(args) {
             if (this.ekpompes[args].mp4 != "") {
                 const i = new android.content.Intent(android.content.Intent.ACTION_VIEW);
@@ -60,6 +70,8 @@
                     this.selper = "Night"
                 }; 
                 url = url+this.someDate.getFullYear()+'-'+(this.someDate.getMonth()+1)+"-"+this.someDate.getDate();
+                console.log("*********************************************");
+                console.log(url);
                 http.request({
                     url: url,
                     method: "GET",
@@ -76,7 +88,6 @@
                 someDate: "",
                 selper: "",
                 ekpompes: [],
-                minDate: "",
             };
         },
     };
@@ -98,7 +109,7 @@
     }
     .titem{
         color: #ffffff;
-        background-color: #000000;
+        background-color: #181616;
         font-size: 24;
         margin-top: 10px;
         margin-left: 10px;

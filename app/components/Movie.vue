@@ -10,7 +10,7 @@
                 <Label class="h4" :text="mv.title" style="color: white;" />
                 <Label class="diar" :text="'Διάρκεια: '+mv.dur" style="color: white;" />
                 <HtmlView class="h4" :html="mv.short_desc" style="color: white;" />
-                <Label class="dm" :text="'Διαθέσιμο μέχρι: '+mv.expiration_date"  />
+                <Label  v-if="mv.expiration_date" class="dm" :text="'Διαθέσιμο μέχρι: '+mv.expiration_date"  />
                 <GridLayout columns="auto,20,auto" rows="auto" class="keno" >
                     <Button row="0" col="0" class="lbl" text="" @tap="onItemTap" >    
                         <FormattedString><Span text="Προβολή" ></Span></FormattedString>

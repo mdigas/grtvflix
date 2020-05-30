@@ -1,13 +1,18 @@
 <template>
     <Page class="page">
-        <ActionBar class="action-bar" title=" " android.icon="res://icon" android.iconVisibility="always">
-        <WrapLayout orientation="horizontal">
-            <Label text=" LiveTV " class="h4menu" @tap="onLiveTap()" />
-            <Label text=" Αρχείο " class="h4menu" @tap="onArchiveTap()" />
-            <Label text=" Μαθαίνουμε Σπίτι " class="h4menu" @tap="onMenoumeTap()" />
-            <Label text.decode="&#xf002;" class="nt-icon fas" @tap="onSearchTap()" />
-            <Label text.decode="&#xf073;" class="nt-icon fas" @tap="onBrowseTap()" />
-        </WrapLayout>
+        <ActionBar class="action-bar">
+            <NavigationButton ios:visibility="collapsed" icon="res://menu" @tap="onDrawerButtonTap"></NavigationButton>
+            <ActionItem icon="res://menu" 
+                android:visibility="collapsed" 
+                @tap="onDrawerButtonTap"
+                ios.position="left">
+            </ActionItem>
+            <Label class="action-bar-title" text="Home"></Label>
+            <StackLayout orientation="horizontal">
+                <Label text=" LiveTV " class="h4menu" @tap="onLiveTap()" />
+                <Label text=" Αρχείο " class="h4menu" @tap="onArchiveTap()" />
+                <Label text=" Μαθαίνουμε Σπίτι " class="h4menu" @tap="onMenoumeTap()" />
+            </StackLayout>
         </ActionBar>
         <ScrollView  orientation="vertical">
         <StackLayout v-if="ok" orientation="vertical">
@@ -63,13 +68,23 @@
             </ScrollView>   
         </StackLayout>
         </ScrollView>
+
     </Page>
-</template> 
+</template>
 
 <script>
+    import * as utils from "~/shared/utils";
+    import SelectedPageService from "../shared/selected-page-service";
     import * as http from "http";
+
     export default {
+        mounted() {
+            SelectedPageService.getInstance().updateSelectedPage("Home");
+        },
         methods: {
+            onDrawerButtonTap() {
+                utils.showDrawer();
+            },
             onLiveTap: function() {
                 this.$goto('LiveTV', {
                     animated: true,
@@ -81,28 +96,6 @@
                     transitionAndroid: {},
                 });
             },
-            onSearchTap: function() {
-                this.$goto('Search', {
-                    animated: true,
-                    transition: {
-                        name: "slideLeft",
-                        duration: 250,
-                        curve: "easeIn"},
-                    transitioniOS: {},
-                    transitionAndroid: {},
-                });
-            },
-            onBrowseTap: function() {
-                this.$goto('Browse', {
-                    animated: true,
-                    transition: {
-                        name: "slideLeft",
-                        duration: 250,
-                        curve: "easeIn"},
-                    transitioniOS: {},
-                    transitionAndroid: {},
-                });
-            },                        
             onArchiveTap: function() {
                 this.$goto('Archive', {
                     animated: true,
@@ -233,8 +226,10 @@
                 method: "GET",
                 }).then(response => {
                 this.seires = response.content.toJSON().services[1].items;
-                this.documentaries = response.content.toJSON().services[3].items;
-                this.paidika = response.content.toJSON().services[4].items;
+                this.documentaries = response.content.toJSON().services.filter(function (chain) {
+                        return chain.masterCategory === "&Xi;&#941;&nu;&alpha; &Nu;&tau;&omicron;&kappa;&iota;&mu;&alpha;&nu;&tau;&#941;&rho;";})[0].items;
+                this.paidika = response.content.toJSON().services.filter(function (chain) {
+                        return chain.masterCategory === "&Delta;&iota;&alpha;&sigma;&kappa;&#941;&delta;&alpha;&sigma;&eta;";})[0].items;
                 }, error => {
                 console.error(error);
                 });
@@ -253,14 +248,11 @@
         }
     };
 </script>
+
 <style scoped lang="scss">
     // Start custom common variables
     @import '~@nativescript/theme/scss/variables/blue';
     // End custom common variables
 
     // Custom styles
-    .nt-icon{
-        color: #ffffff;
-        font-size: 24;
-    }
 </style>

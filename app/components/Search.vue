@@ -1,12 +1,18 @@
 <template>
     <Page class="page">
-        <ActionBar class="action-bar" title=" " android.icon="res://icon" android.iconVisibility="always">
-                  <NavigationButton text="Go back" android.systemIcon="ic_menu_back" @tap="$navigateBack" />
-        </ActionBar> 
+        <ActionBar class="action-bar">
+            <NavigationButton ios:visibility="collapsed" icon="res://menu" @tap="onDrawerButtonTap"></NavigationButton>
+            <ActionItem icon="res://menu" 
+                android:visibility="collapsed" 
+                @tap="onDrawerButtonTap"
+                ios.position="left">
+            </ActionItem>
+            <Label class="action-bar-title" text="Search"></Label>
+        </ActionBar>
 
         <ScrollView>
             <StackLayout>
-                    <Label ><FormattedString><Span text.decode="&#xf002;" class="nt-icon fas"></Span>
+                    <Label col="0" ><FormattedString><Span text.decode="&#xf002;" class="nt-icon fas"></Span>
                     <Span text="  Αναζήτηση" class="h2"></Span></FormattedString></Label> 
                 <SearchBar v-model="searchQuery" hint="Αναζήτηση" textFieldHintColor="#FFFFFF" class="search" @submit="onSearchSubmit" />
                     <WrapLayout>
@@ -22,11 +28,18 @@
 
 <script>
     import * as http from "http";
+    import * as utils from "~/shared/utils";
     var utilsModule = require("tns-core-modules/utils/utils");
     import * as application from 'application';
 
     export default {
+        mounted() {
+            SelectedPageService.getInstance().updateSelectedPage("Search");
+        },
         methods: {
+            onDrawerButtonTap() {
+                utils.showDrawer();
+            },
             onSearchSubmit(args) {
                 var url="http://hbbtv.ert.gr/pub/smarttv/ert/dyn/feed_search.php?type=full&keyword="+this.searchQuery;
               

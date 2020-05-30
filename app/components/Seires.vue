@@ -15,12 +15,13 @@
                 </GridLayout>
                 <ScrollView orientation="horizontal" class="keno" >
                     <StackLayout orientation="horizontal" >
-                        <GridLayout  v-for="(episode, index) in episodes" rows="156, auto" columns="277"  @tap="onTapPlay(index)" >
+                        <GridLayout  v-for="(episode, index) in episodes" rows="156, auto, auto" columns="277"  @tap="onTapPlay(index)" >
                             <Image row="0" col="0" :src="episode.image" class="card"  loadMode="async" stretch="aspectFill"  />
-                            <Label class="lbl" row="1" col="0" ><FormattedString>
-                                <Span v-if="episode.season_num" :text="'Σ:'+episode.season_num" />
-                                <Span :text="'E:'+episode.episode_num" />
-                                <span :text="'   Διαθ.Μέχρι: '+episode.expiration_date" /></FormattedString>
+                            <HtmlView v-if="episode.title" class="lbl" row="1" col="0" :html="episode.title" style="color: white;" />
+                            <Label class="lbl" row="2" col="0" ><FormattedString>
+                                <Span v-if="episode.season_num" :text="'Σ:'+episode.season_num+' '" />
+                                <Span v-if="episode.episode_num" :text="'E:'+episode.episode_num" />
+                                <span v-if="episode.expiration_date" :text="'   Διαθ.Μέχρι: '+episode.expiration_date" /></FormattedString>
                             </Label>
                         </GridLayout>
                     </StackLayout>
