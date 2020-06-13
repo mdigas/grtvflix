@@ -67,7 +67,8 @@
                 url: url2,
                 method: "GET",
                 }).then(response => {
-                this.seires = response.content.toJSON().services[1].items;
+                this.seires = response.content.toJSON().services.filter(function (chain) {
+                        return chain.idnam === "xenes-seires";})[0].items;
                 this.idx = Math.floor(Math.random() * this.seires.length);
                 this.ok = true;
                 }, error => {

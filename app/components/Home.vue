@@ -225,7 +225,8 @@
                 url: url2,
                 method: "GET",
                 }).then(response => {
-                this.seires = response.content.toJSON().services[1].items;
+                this.seires = response.content.toJSON().services.filter(function (chain) {
+                        return chain.idnam === "xenes-seires";})[0].items;
                 this.documentaries = response.content.toJSON().services.filter(function (chain) {
                         return chain.masterCategory === "&Xi;&#941;&nu;&alpha; &Nu;&tau;&omicron;&kappa;&iota;&mu;&alpha;&nu;&tau;&#941;&rho;";})[0].items;
                 this.paidika = response.content.toJSON().services.filter(function (chain) {
