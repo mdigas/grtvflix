@@ -18,7 +18,7 @@
                 <HtmlView class="h4" :html="documentaries[idx].short_desc" row="0" col="0" colSpan="2" textWrap="True" style="color: white;" />
             </StackLayout>
         </GridLayout>
-            <Label text="Ντοκιμαντέρ" class="h2" />
+            <Label text="Ξένα Ντοκιμαντέρ" class="h2" />
             <ScrollView orientation="horizontal">
                 <StackLayout orientation="horizontal" >
                     <GridLayout v-for="(doc, index) in documentaries" rows="156" columns="277" @tap="onItemTap(index, 1)" >
@@ -26,6 +26,14 @@
                     </GridLayout>
                 </StackLayout>
             </ScrollView>
+            <Label text="Ελληνικά Ντοκιμαντέρ" class="h2" />
+            <ScrollView orientation="horizontal">
+                <StackLayout orientation="horizontal" >
+                    <GridLayout v-for="(eldoc, index) in eldocumentaries" rows="156" columns="277" @tap="onItemTap(index, 4)" >
+                        <Image row="0" col="0" :src="'http://hbbtv.ert.gr'+eldoc.menu_img_url" class="card" loadMode="async" stretch="aspectFill"  />
+                    </GridLayout>
+                </StackLayout>
+            </ScrollView>            
             <Label text="Ψυχαγωγία" class="h2" />
             <ScrollView orientation="horizontal">
                 <StackLayout orientation="horizontal" >
@@ -73,6 +81,9 @@
                     case 3:
                         seira = this.interviews[args];
                         break;
+                    case 4:
+                        seira = this.eldocumentaries[args];
+                        break;                        
                     };
                 this.$goto('Seires', {
                     animated: true,
@@ -98,6 +109,8 @@
                 }).then(response => {
                 this.documentaries = response.content.toJSON().services.filter(function (chain) {
                         return chain.masterCategory === "&Xi;&#941;&nu;&alpha; &Nu;&tau;&omicron;&kappa;&iota;&mu;&alpha;&nu;&tau;&#941;&rho;";})[0].items;
+                this.eldocumentaries = response.content.toJSON().services.filter(function (chain) {
+                        return chain.masterCategory === "&Epsilon;&lambda;&lambda;&eta;&nu;&iota;&kappa;&#940; &Nu;&tau;&omicron;&kappa;&iota;&mu;&alpha;&nu;&tau;&#941;&rho;";})[0].items;
                 this.entertmns = response.content.toJSON().services.filter(function (chain) {
                         return chain.masterCategory === "&Psi;&upsilon;&chi;&alpha;&gamma;&omega;&gamma;&#943;&alpha;";})[0].items;
                 this.interviews = response.content.toJSON().services.filter(function (chain) {
@@ -112,6 +125,7 @@
         data() {
             return {
                 documentaries: [ ],
+                eldocumentaries: [ ],                
                 entertmns: [ ],
                 interviews: [ ],
                 idx: 0,

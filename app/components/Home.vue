@@ -42,7 +42,7 @@
                     </GridLayout>
                 </StackLayout>
             </ScrollView>
-            <Label text="Ντοκιμαντέρ" class="h2" />
+            <Label text="Ξένα Ντοκιμαντέρ" class="h2" />
             <ScrollView orientation="horizontal">
                 <StackLayout orientation="horizontal" >
                     <GridLayout v-for="(doc, indexd) in documentaries" rows="156" columns="277" @tap="onItemTap3(indexd)" >
@@ -50,6 +50,14 @@
                     </GridLayout>
                 </StackLayout>
             </ScrollView>
+            <Label text="Ελληνικά Ντοκιμαντέρ" class="h2" />
+            <ScrollView orientation="horizontal">
+                <StackLayout orientation="horizontal" >
+                    <GridLayout v-for="(eldoc, indexd) in eldocumentaries" rows="156" columns="277" @tap="onItemTap6(indexd)" >
+                        <Image row="0" col="0" :src="'http://hbbtv.ert.gr'+eldoc.menu_img_url" class="card" loadMode="async" stretch="aspectFill"  />
+                    </GridLayout>
+                </StackLayout>
+            </ScrollView>            
             <Label text="Ενημέρωση" class="h2" />
             <ScrollView orientation="horizontal">
                 <StackLayout orientation="horizontal" >
@@ -163,6 +171,21 @@
                     }
                 });
             }, 
+            onItemTap6: function(args) {
+                console.log("Item with index: " + args + " tapped");
+                this.$goto('Seires', {
+                    animated: true,
+                    transition: {
+                        name: "slideLeft",
+                        duration: 250,
+                        curve: "easeIn"},
+                    transitioniOS: {},
+                    transitionAndroid: {},
+                    props: {
+                        seira: this.eldocumentaries[args]
+                    }
+                });
+            },            
             onItemTap4: function(args) {
                 console.log("Item with index: " + args + " tapped");
                 this.$goto('Seires', {
@@ -229,6 +252,8 @@
                         return chain.idnam === "xenes-seires";})[0].items;
                 this.documentaries = response.content.toJSON().services.filter(function (chain) {
                         return chain.masterCategory === "&Xi;&#941;&nu;&alpha; &Nu;&tau;&omicron;&kappa;&iota;&mu;&alpha;&nu;&tau;&#941;&rho;";})[0].items;
+                this.eldocumentaries = response.content.toJSON().services.filter(function (chain) {
+                        return chain.masterCategory === "&Epsilon;&lambda;&lambda;&eta;&nu;&iota;&kappa;&#940; &Nu;&tau;&omicron;&kappa;&iota;&mu;&alpha;&nu;&tau;&#941;&rho;";})[0].items;
                 this.paidika = response.content.toJSON().services.filter(function (chain) {
                         return chain.masterCategory === "&Delta;&iota;&alpha;&sigma;&kappa;&#941;&delta;&alpha;&sigma;&eta;";})[0].items;
                 }, error => {
@@ -241,6 +266,7 @@
                 movies: [ ],
                 seires: [ ],
                 documentaries: [ ],
+                eldocumentaries: [ ],                
                 enimerosi: [ ],
                 paidika: [ ],
                 idx: 0,

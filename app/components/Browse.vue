@@ -7,7 +7,7 @@
                 @tap="onDrawerButtonTap"
                 ios.position="left">
             </ActionItem>
-            <Label class="action-bar-title" text="Browse"></Label>
+            <Label class="action-bar-title" text="Μέρες πριν..."></Label>
         </ActionBar>
         <ScrollView>
             <StackLayout orientation="vertical">

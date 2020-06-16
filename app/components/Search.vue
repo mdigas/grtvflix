@@ -7,7 +7,7 @@
                 @tap="onDrawerButtonTap"
                 ios.position="left">
             </ActionItem>
-            <Label class="action-bar-title" text="Search"></Label>
+            <Label class="action-bar-title" text="Αναζήτηση"></Label>
         </ActionBar>
 
         <ScrollView>
