@@ -10,7 +10,6 @@
             <Label class="action-bar-title" text="Home"></Label>
             <StackLayout orientation="horizontal">
                 <Label text=" LiveTV " class="h4menu" @tap="onLiveTap()" />
-                <Label text=" Αρχείο " class="h4menu" @tap="onArchiveTap()" />
                 <Label text=" Μαθαίνουμε Σπίτι " class="h4menu" @tap="onMenoumeTap()" />
             </StackLayout>
         </ActionBar>
@@ -95,17 +94,6 @@
             },
             onLiveTap: function() {
                 this.$goto('LiveTV', {
-                    animated: true,
-                    transition: {
-                        name: "slideLeft",
-                        duration: 250,
-                        curve: "easeIn"},
-                    transitioniOS: {},
-                    transitionAndroid: {},
-                });
-            },
-            onArchiveTap: function() {
-                this.$goto('Archive', {
                     animated: true,
                     transition: {
                         name: "slideLeft",
