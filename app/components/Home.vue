@@ -237,7 +237,7 @@
                 method: "GET",
                 }).then(response => {
                 this.seires = response.content.toJSON().services.filter(function (chain) {
-                        return chain.idnam === "xenes-seires";})[0].items;
+                        return chain.masterCategory === "TV &Sigma;&epsilon;&iota;&rho;&#941;&sigmaf;";})[0].items;
                 this.documentaries = response.content.toJSON().services.filter(function (chain) {
                         return chain.masterCategory === "&Xi;&#941;&nu;&alpha; &Nu;&tau;&omicron;&kappa;&iota;&mu;&alpha;&nu;&tau;&#941;&rho;";})[0].items;
                 this.eldocumentaries = response.content.toJSON().services.filter(function (chain) {

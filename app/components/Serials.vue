@@ -17,11 +17,19 @@
                 <HtmlView class="h4" :html="seires[idx].title" style="color: white;" />
                 <HtmlView class="h4" :html="seires[idx].short_desc" row="0" col="0" colSpan="2" textWrap="True" style="color: white;" />
             </StackLayout>
-        </GridLayout> 
+        </GridLayout>
+            <Label text="Web Σειρές" class="h2" />
+            <ScrollView orientation="horizontal">
+                <StackLayout orientation="horizontal" >
+                    <GridLayout v-for="(seira, indexs) in seiresweb" rows="156" columns="277" @tap="onItemTap2(indexs,1)">
+                        <Image row="0" col="0" :src="'http://hbbtv.ert.gr'+seira.menu_img_url" class="card" loadMode="async" stretch="aspectFill"  />
+                    </GridLayout>
+                </StackLayout>
+            </ScrollView> 
             <Label text="Σειρές" class="h2" />
             <ScrollView orientation="horizontal">
                 <StackLayout orientation="horizontal" >
-                    <GridLayout v-for="(seira, indexs) in seires" rows="156" columns="277" @tap="onItemTap2(indexs)">
+                    <GridLayout v-for="(seira, indexs) in seires" rows="156" columns="277" @tap="onItemTap2(indexs,2)">
                         <Image row="0" col="0" :src="'http://hbbtv.ert.gr'+seira.menu_img_url" class="card" loadMode="async" stretch="aspectFill"  />
                     </GridLayout>
                 </StackLayout>
@@ -44,7 +52,16 @@
             onDrawerButtonTap() {
                 utils.showDrawer();
             },
-            onItemTap2: function(args) {
+            onItemTap2: function(args, no) {
+                var seira = "";
+                switch(no) {
+                    case 1: 
+                        seira = this.seiresweb[args];
+                        break;
+                    case 2:
+                        seira = this.seires[args];
+                        break;                        
+                    };
                 console.log("Item with index: " + args + " tapped");
                 this.$goto('Seires', {
                     animated: true,
@@ -55,7 +72,7 @@
                     transitioniOS: {},
                     transitionAndroid: {},
                     props: {
-                        seira: this.seires[args]
+                        seira: seira
                     }
                 });
             },
@@ -68,7 +85,9 @@
                 method: "GET",
                 }).then(response => {
                 this.seires = response.content.toJSON().services.filter(function (chain) {
-                        return chain.idnam === "xenes-seires";})[0].items;
+                        return chain.masterCategory === "TV &Sigma;&epsilon;&iota;&rho;&#941;&sigmaf;";})[0].items;
+                this.seiresweb = response.content.toJSON().services.filter(function (chain) {
+                        return chain.masterCategory === "Web &Sigma;&epsilon;&iota;&rho;&#941;&sigmaf;";})[0].items;
                 this.idx = Math.floor(Math.random() * this.seires.length);
                 this.ok = true;
                 }, error => {
@@ -78,7 +97,8 @@
         },        
         data() {
             return {
-                seires: [ ],
+                seires: [],
+                seiresweb: [],
                 idx: 0,
                 ok: false,
             };
