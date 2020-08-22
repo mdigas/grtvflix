@@ -12,28 +12,22 @@
         <ScrollView  orientation="vertical">
         <StackLayout v-if="ok" orientation="vertical">
         <GridLayout columns="50,250,*" rows="auto" >
-             <Image row="0" col="0" colSpan="3" :src="'http://hbbtv.ert.gr'+seires[idx].bg_img_url" loadMode="async" horizontalAlignment="right" stretch="fill"  /> 
+             <Image row="0" col="0" colSpan="3" :src="'http://hbbtv.ert.gr'+seires[0].items[idx].bg_img_url" loadMode="async" horizontalAlignment="right" stretch="fill"  /> 
              <StackLayout row="0" col="0" colSpan="2" class="stdown">
-                <HtmlView class="h4" :html="seires[idx].title" style="color: white;" />
-                <HtmlView class="h4" :html="seires[idx].short_desc" row="0" col="0" colSpan="2" textWrap="True" style="color: white;" />
+                <HtmlView class="h4" :html="seires[0].items[idx].title" style="color: white;" />
+                <HtmlView class="h4" :html="seires[0].items[idx].short_desc" row="0" col="0" colSpan="2" textWrap="True" style="color: white;" />
             </StackLayout>
         </GridLayout>
-            <Label text="Web Σειρές" class="h2" />
-            <ScrollView orientation="horizontal">
-                <StackLayout orientation="horizontal" >
-                    <GridLayout v-for="(seira, indexs) in seiresweb" rows="156" columns="277" @tap="onItemTap2(indexs,1)">
-                        <Image row="0" col="0" :src="'http://hbbtv.ert.gr'+seira.menu_img_url" class="card" loadMode="async" stretch="aspectFill"  />
-                    </GridLayout>
-                </StackLayout>
-            </ScrollView> 
-            <Label text="Σειρές" class="h2" />
-            <ScrollView orientation="horizontal">
-                <StackLayout orientation="horizontal" >
-                    <GridLayout v-for="(seira, indexs) in seires" rows="156" columns="277" @tap="onItemTap2(indexs,2)">
-                        <Image row="0" col="0" :src="'http://hbbtv.ert.gr'+seira.menu_img_url" class="card" loadMode="async" stretch="aspectFill"  />
-                    </GridLayout>
-                </StackLayout>
-            </ScrollView>
+            <StackLayout v-for="(list, listindex) in seires">
+                <HtmlView class="h2" :html="list.masterCategory" />
+                <ScrollView orientation="horizontal">
+                    <StackLayout orientation="horizontal" >
+                        <GridLayout v-for="(item, index) in list.items" rows="156" columns="277" @tap="onItemTap(listindex, index)" >
+                            <Image row="0" col="0" :src="'http://hbbtv.ert.gr'+item.menu_img_url" class="card"  loadMode="async" stretch="aspectFill"  />
+                        </GridLayout>
+                    </StackLayout>
+                </ScrollView>              
+            </StackLayout>        
         </StackLayout>
         </ScrollView>
     </Page>
@@ -52,16 +46,9 @@
             onDrawerButtonTap() {
                 utils.showDrawer();
             },
-            onItemTap2: function(args, no) {
+            onItemTap: function(l, args) {
                 var seira = "";
-                switch(no) {
-                    case 1: 
-                        seira = this.seiresweb[args];
-                        break;
-                    case 2:
-                        seira = this.seires[args];
-                        break;                        
-                    };
+                seira = this.seires[l].items[args];
                 console.log("Item with index: " + args + " tapped");
                 this.$goto('Seires', {
                     animated: true,
@@ -72,7 +59,7 @@
                     transitioniOS: {},
                     transitionAndroid: {},
                     props: {
-                        seira: seira
+                        msitem: seira
                     }
                 });
             },
@@ -85,10 +72,8 @@
                 method: "GET",
                 }).then(response => {
                 this.seires = response.content.toJSON().services.filter(function (chain) {
-                        return chain.masterCategory === "TV &Sigma;&epsilon;&iota;&rho;&#941;&sigmaf;";})[0].items;
-                this.seiresweb = response.content.toJSON().services.filter(function (chain) {
-                        return chain.masterCategory === "Web &Sigma;&epsilon;&iota;&rho;&#941;&sigmaf;";})[0].items;
-                this.idx = Math.floor(Math.random() * this.seires.length);
+                        return chain.id === "32";});
+                this.idx = Math.floor(Math.random() * this.seires[0].items.length);
                 this.ok = true;
                 }, error => {
                 console.error(error);

@@ -9,27 +9,26 @@
             </ActionItem>
             <Label class="action-bar-title" text="Ταινίες"></Label>
         </ActionBar>
-        <ScrollView  orientation="vertical">
-            <StackLayout v-if="ok" orientation="vertical">
-                <GridLayout columns="50,250,*" rows="auto" >
-                    <Image row="0" col="0" colSpan="3" :src="movies[idx].bg_img_url" loadMode="async" horizontalAlignment="right" stretch="fill"  /> 
-                    <StackLayout row="0" col="0" colSpan="2" class="stdown">
-                        <Label class="h4" :text="movies[idx].title" style="color: white;" />
-                        <Label class="diar" :text="'Διάρκεια: '+movies[idx].dur" style="color: white;" />
-                        <Label class="desc" :text="movies[idx].short_desc" row="0" col="0" colSpan="2" textWrap="True" />
-                        <Label class="dm" :text="'Διαθέσιμο μέχρι: '+movies[idx].expiration_date"  />
+        <ScrollView  orientation="vertical" >
+            <StackLayout v-if="ok" orientation="vertical" >
+                <GridLayout columns="50,400,*,*" rows="150,*,auto" >
+                    <Image row="0" col="0" colSpan="4" rowSpan="3" :src="movies[idx].bg_img_url" loadMode="async" horizontalAlignment="right" stretch="fill"  /> 
+                    <StackLayout row="1" col="1" colSpan="2" >
+                        <HtmlView class="h4" :html="movies[idx].title" />
+                        <Label class="h5" :text="'Διάρκεια: '+movies[idx].dur" />
+                        <Label class="h5" :text="movies[idx].short_desc" textWrap="True" />
+                        <Label class="h5" :text="'Διαθέσιμο μέχρι: '+movies[idx].expiration_date"  />
                     </StackLayout>
-                </GridLayout>
-                <Label text="Ταινίες" class="h2" />
-                <ScrollView orientation="horizontal">
-                    <StackLayout orientation="horizontal" >
-                        <GridLayout v-for="(movie, index) in movies" rows="156" columns="277" @tap="onItemTap(index)" >
-                            <Image row="0" col="0" :src="movie.image" class="card"  loadMode="async" stretch="aspectFill"  />
-                        </GridLayout>
-                    </StackLayout>
-                </ScrollView>                  
-              </StackLayout>
-        </ScrollView>
+                    <ScrollView orientation="horizontal" row="2" col="0" colSpan="4" >
+                        <StackLayout orientation="horizontal" >
+                            <GridLayout v-for="(movie, index) in movies" rows="156" columns="277" @tap="onItemTap(index)" >
+                                <Image row="0" col="0" :src="movie.image" class="card"  loadMode="async" stretch="aspectFill"  />
+                            </GridLayout>
+                        </StackLayout>
+                    </ScrollView>   
+                </GridLayout>                              
+            </StackLayout>
+        </ScrollView>        
     </Page>
 </template>
 
@@ -57,7 +56,7 @@
                     transitioniOS: {},
                     transitionAndroid: {},
                     props: {
-                        movie: this.movies[args]
+                        msitem: this.movies[args]
                     }
                 });
             },

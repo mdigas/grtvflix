@@ -48,7 +48,7 @@
             },
             onItemTap: function(args) {
                 console.log("Item with index: " + args + " tapped");
-                this.$goto('News', {
+                this.$goto('Movie', {
                     animated: true,
                     transition: {
                         name: "slideLeft",
@@ -57,7 +57,7 @@
                     transitioniOS: {},
                     transitionAndroid: {},
                     props: {
-                        movie: this.enimerosi[args]
+                        msitem: this.enimerosi[args]
                     }
                 });
             },                                  

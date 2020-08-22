@@ -2,8 +2,8 @@
 <GridLayout rows="auto, *" class="nt-drawer__content">
             <StackLayout row="0" class="nt-drawer__header">
                 <Image src="res://icon" width="72" height="72"></Image>
-                <Label class="nt-drawer__header-brand" text="ERTflix"></Label>
-                <Label class="nt-drawer__header-footnote" text="ertflix@protonmail.com"></Label>
+                <Label class="h5" text="ERTflix"></Label>
+                <Label class="h6" text="ertflix@protonmail.com"></Label>
             </StackLayout>
         
             <ScrollView row="1" class="nt-drawer__body">

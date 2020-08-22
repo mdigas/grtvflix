@@ -9,8 +9,8 @@
             </ActionItem>
             <Label class="action-bar-title" text="Home"></Label>
             <StackLayout orientation="horizontal">
-                <Label text=" LiveTV " class="h4menu" @tap="onLiveTap()" />
-                <Label text=" Μαθαίνουμε Σπίτι " class="h4menu" @tap="onMenoumeTap()" />
+                <Label text=" LiveTV " class="h4" @tap="onLiveTap()" />
+                <Label text=" Μαθαίνουμε Σπίτι " class="h4" @tap="onMenoumeTap()" />
             </StackLayout>
         </ActionBar>
         <ScrollView  orientation="vertical">
@@ -28,54 +28,51 @@
             <Label text="Ταινίες" class="h2" />
             <ScrollView orientation="horizontal">
                 <StackLayout orientation="horizontal" >
-                    <GridLayout v-for="(movie, index) in movies" rows="156" columns="277" @tap="onItemTap1(index)" >
+                    <GridLayout v-for="(movie, index) in movies" rows="156" columns="277" @tap="onItemTap(0, index, 1)" >
                         <Image row="0" col="0" :src="movie.image" class="card"  loadMode="async" stretch="aspectFill"  />
                     </GridLayout>
                 </StackLayout>
-            </ScrollView>                  
-            <Label text="Σειρές" class="h2" />
+            </ScrollView>         
+        <StackLayout v-for="(list, listindex) in seires">
+            <HtmlView class="h2" :html="list.masterCategory" />
             <ScrollView orientation="horizontal">
                 <StackLayout orientation="horizontal" >
-                    <GridLayout v-for="(seira, indexs) in seires" rows="156" columns="277" @tap="onItemTap2(indexs)">
-                        <Image row="0" col="0" :src="'http://hbbtv.ert.gr'+seira.menu_img_url" class="card" loadMode="async" stretch="aspectFill"  />
+                    <GridLayout v-for="(item, index) in list.items" rows="156" columns="277" @tap="onItemTap(listindex, index, 2)" >
+                        <Image row="0" col="0" :src="'http://hbbtv.ert.gr'+item.menu_img_url" class="card"  loadMode="async" stretch="aspectFill"  />
                     </GridLayout>
                 </StackLayout>
-            </ScrollView>
-            <Label text="Ξένα Ντοκιμαντέρ" class="h2" />
+            </ScrollView>              
+        </StackLayout>
+        <StackLayout v-for="(list, listindex) in documentaries">
+            <HtmlView class="h2" :html="list.masterCategory" />
             <ScrollView orientation="horizontal">
                 <StackLayout orientation="horizontal" >
-                    <GridLayout v-for="(doc, indexd) in documentaries" rows="156" columns="277" @tap="onItemTap3(indexd)" >
-                        <Image row="0" col="0" :src="'http://hbbtv.ert.gr'+doc.menu_img_url" class="card" loadMode="async" stretch="aspectFill"  />
+                    <GridLayout v-for="(item, index) in list.items" rows="156" columns="277" @tap="onItemTap(listindex, index, 3)" >
+                        <Image row="0" col="0" :src="'http://hbbtv.ert.gr'+item.menu_img_url" class="card"  loadMode="async" stretch="aspectFill"  />
                     </GridLayout>
                 </StackLayout>
-            </ScrollView>
-            <Label text="Ελληνικά Ντοκιμαντέρ" class="h2" />
-            <ScrollView orientation="horizontal">
-                <StackLayout orientation="horizontal" >
-                    <GridLayout v-for="(eldoc, indexd) in eldocumentaries" rows="156" columns="277" @tap="onItemTap6(indexd)" >
-                        <Image row="0" col="0" :src="'http://hbbtv.ert.gr'+eldoc.menu_img_url" class="card" loadMode="async" stretch="aspectFill"  />
-                    </GridLayout>
-                </StackLayout>
-            </ScrollView>            
+            </ScrollView>              
+        </StackLayout> 
             <Label text="Ενημέρωση" class="h2" />
             <ScrollView orientation="horizontal">
                 <StackLayout orientation="horizontal" >
-                    <GridLayout v-for="(enim, indexe) in enimerosi" rows="156" columns="277"  @tap="onItemTap5(indexe)">
+                    <GridLayout v-for="(enim, indexe) in enimerosi" rows="156" columns="277"  @tap="onItemTap(0,indexe,4)">
                         <Image row="0" col="0" :src="enim.image" class="card" loadMode="async" stretch="aspectFill"  />
                     </GridLayout>
                 </StackLayout>
-            </ScrollView> 
-            <Label text="Παιδικά" class="h2" />                        
+            </ScrollView>         
+        <StackLayout v-for="(list, listindex) in paidika">
+            <HtmlView class="h2" :html="list.masterCategory" />
             <ScrollView orientation="horizontal">
                 <StackLayout orientation="horizontal" >
-                    <GridLayout v-for="(paid, indexp) in paidika" rows="156" columns="277" @tap="onItemTap4(indexp)" >
-                        <Image row="0" col="0" :src="'http://hbbtv.ert.gr'+paid.menu_img_url" class="card" loadMode="async" stretch="aspectFill"  />
+                    <GridLayout v-for="(item, index) in list.items" rows="156" columns="277" @tap="onItemTap(listindex, index, 5)" >
+                        <Image row="0" col="0" :src="'http://hbbtv.ert.gr'+item.menu_img_url" class="card"  loadMode="async" stretch="aspectFill"  />
                     </GridLayout>
                 </StackLayout>
-            </ScrollView>   
+            </ScrollView>              
+        </StackLayout>                
         </StackLayout>
-        </ScrollView>
-
+        </ScrollView>   
     </Page>
 </template>
 
@@ -113,25 +110,30 @@
                     transitioniOS: {},
                     transitionAndroid: {},
                 });
-            },                      
-            onItemTap1: function(args) {
-                console.log("Item with index: " + args + " tapped");
-                this.$goto('Movie', {
-                    animated: true,
-                    transition: {
-                        name: "slideLeft",
-                        duration: 250,
-                        curve: "easeIn"},
-                    transitioniOS: {},
-                    transitionAndroid: {},
-                    props: {
-                        movie: this.movies[args]
-                    }
-                });
             },
-            onItemTap2: function(args) {
-                console.log("Item with index: " + args + " tapped");
-                this.$goto('Seires', {
+            onItemTap: function(l,args,no) {
+                var seira = "";
+                var NavNext = "Seires";
+                switch(no) {
+                    case 1: 
+                        seira = this.movies[args];
+                        NavNext = "Movie";
+                        break;
+                    case 2:
+                        seira = this.seires[l].items[args];
+                        break;
+                    case 3:
+                        seira = this.documentaries[l].items[args];
+                        break;    
+                    case 4:
+                        seira = this.enimerosi[args];
+                        NavNext = "Movie";
+                        break;
+                    case 5:
+                        seira = this.paidika[l].items[args];
+                        break;                         
+                    };
+                this.$goto(NavNext, {
                     animated: true,
                     transition: {
                         name: "slideLeft",
@@ -140,67 +142,7 @@
                     transitioniOS: {},
                     transitionAndroid: {},
                     props: {
-                        seira: this.seires[args]
-                    }
-                });
-            },
-            onItemTap3: function(args) {
-                console.log("Item with index: " + args + " tapped");
-                this.$goto('Seires', {
-                    animated: true,
-                    transition: {
-                        name: "slideLeft",
-                        duration: 250,
-                        curve: "easeIn"},
-                    transitioniOS: {},
-                    transitionAndroid: {},
-                    props: {
-                        seira: this.documentaries[args]
-                    }
-                });
-            }, 
-            onItemTap6: function(args) {
-                console.log("Item with index: " + args + " tapped");
-                this.$goto('Seires', {
-                    animated: true,
-                    transition: {
-                        name: "slideLeft",
-                        duration: 250,
-                        curve: "easeIn"},
-                    transitioniOS: {},
-                    transitionAndroid: {},
-                    props: {
-                        seira: this.eldocumentaries[args]
-                    }
-                });
-            },            
-            onItemTap4: function(args) {
-                console.log("Item with index: " + args + " tapped");
-                this.$goto('Seires', {
-                    animated: true,
-                    transition: {
-                        name: "slideLeft",
-                        duration: 250,
-                        curve: "easeIn"},
-                    transitioniOS: {},
-                    transitionAndroid: {},
-                    props: {
-                        seira: this.paidika[args]
-                    }
-                });
-            }, 
-            onItemTap5: function(args) {
-                console.log("Item with index: " + args + " tapped");
-                this.$goto('News', {
-                    animated: true,
-                    transition: {
-                        name: "slideLeft",
-                        duration: 250,
-                        curve: "easeIn"},
-                    transitioniOS: {},
-                    transitionAndroid: {},
-                    props: {
-                        movie: this.enimerosi[args]
+                        msitem: seira
                     }
                 });
             },                                  
@@ -237,13 +179,11 @@
                 method: "GET",
                 }).then(response => {
                 this.seires = response.content.toJSON().services.filter(function (chain) {
-                        return chain.masterCategory === "TV &Sigma;&epsilon;&iota;&rho;&#941;&sigmaf;";})[0].items;
+                        return chain.id === "32";});
                 this.documentaries = response.content.toJSON().services.filter(function (chain) {
-                        return chain.masterCategory === "&Xi;&#941;&nu;&alpha; &Nu;&tau;&omicron;&kappa;&iota;&mu;&alpha;&nu;&tau;&#941;&rho;";})[0].items;
-                this.eldocumentaries = response.content.toJSON().services.filter(function (chain) {
-                        return chain.masterCategory === "&Epsilon;&lambda;&lambda;&eta;&nu;&iota;&kappa;&#940; &Nu;&tau;&omicron;&kappa;&iota;&mu;&alpha;&nu;&tau;&#941;&rho;";})[0].items;
+                        return chain.id === "26";});
                 this.paidika = response.content.toJSON().services.filter(function (chain) {
-                        return chain.masterCategory === "&Delta;&iota;&alpha;&sigma;&kappa;&#941;&delta;&alpha;&sigma;&eta;";})[0].items;
+                        return chain.id === "29";});                    
                 }, error => {
                 console.error(error);
                 });
@@ -253,8 +193,7 @@
             return {
                 movies: [ ],
                 seires: [ ],
-                documentaries: [ ],
-                eldocumentaries: [ ],                
+                documentaries: [ ],              
                 enimerosi: [ ],
                 paidika: [ ],
                 idx: 0,

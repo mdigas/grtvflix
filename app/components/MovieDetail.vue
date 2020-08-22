@@ -4,8 +4,8 @@
           <NavigationButton text="Go back" android.systemIcon="ic_menu_back" @tap="$navigateBack" />
         </ActionBar>
         <ScrollView>
-            <StackLayout orientation="vertical">
-               <WebView :src="starthtml+$props.detail+endhtml" class="page" />	
+            <StackLayout orientation="vertical" class="info" >
+               <HtmlView class="h5" :html="starthtml+$props.detail+endhtml" />	
             </StackLayout>  
         </ScrollView>
     </Page>         

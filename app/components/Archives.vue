@@ -55,7 +55,7 @@
                     transitioniOS: {},
                     transitionAndroid: {},
                     props: {
-                        seira: this.archives[args]
+                        msitem: this.archives[args]
                     }
                 });
             },

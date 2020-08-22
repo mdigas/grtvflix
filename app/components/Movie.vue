@@ -3,25 +3,26 @@
         <ActionBar class="action-bar" title=" " android.icon="res://icon" android.iconVisibility="always">
                   <NavigationButton text="Go back" android.systemIcon="ic_menu_back" @tap="$navigateBack" />
         </ActionBar>  
-        <ScrollView :style="bcpage"> 
-        <StackLayout orientation="vertical">
-        <GridLayout columns="50,250,auto" rows="auto" >
-             <StackLayout row="0" col="0" colSpan="2" class="stdown">
-                <Label class="h4" :text="mv.title" style="color: white;" />
-                <Label class="diar" :text="'Διάρκεια: '+mv.dur" style="color: white;" />
-                <HtmlView class="h4" :html="mv.short_desc" style="color: white;" />
-                <Label  v-if="mv.expiration_date" class="dm" :text="'Διαθέσιμο μέχρι: '+mv.expiration_date"  />
-                <GridLayout columns="auto,20,auto" rows="auto" class="keno" >
-                    <Button row="0" col="0" class="lbl" text="" @tap="onItemTap" >    
-                        <FormattedString><Span text="Προβολή" ></Span></FormattedString>
-                    </Button>
-                    <Button row="0" col="2" class="lbl" @tap="onmoreTap">
-                            <FormattedString><Span text="Περισσότερα" ></Span></FormattedString>
-                    </Button>
-                </GridLayout>
-            </StackLayout>
-        </GridLayout>
-        </StackLayout>      
+        <ScrollView>
+            <GridLayout columns="50,*,*,*" rows="150,*,*" >
+            <Image row="0" col="0" colSpan="4" rowSpan="3" :src="this.$props.msitem.bg_img_url" loadMode="async" horizontalAlignment="right" stretch="fill"  /> 
+             <StackLayout row="1" col="1" colSpan="2" >
+                <Label class="h4" :text="mv.title" />
+                <Label class="h5" :text="'Διάρκεια: '+mv.dur" />
+                <HtmlView class="h5" :html="mv.short_desc" />
+                <Label  v-if="mv.expiration_date" class="h5" :text="'Διαθέσιμο μέχρι: '+mv.expiration_date"  />
+             </StackLayout>
+            <GridLayout row="2" col="1" colSpan="2" columns="*, auto, *" rows="*" >
+                <Button row="0" col="0" class="btnplay" @tap="onTapPlay" >    
+                    <FormattedString><Span text="Προβολή  " ></Span>
+                    <Span class="fas" text.decode="&#xf144;" fontAttributes="Bold"></Span></FormattedString>
+                </Button>
+                <Button row="0" col="2" class="btnplay" @tap="onmoreTap">
+                    <FormattedString><Span text="Περισσότερα  " ></Span>
+                    <Span class="fas" text.decode="&#xf05a;" fontAttributes="Bold"></Span></FormattedString>
+                </Button>
+            </GridLayout>                    
+        </GridLayout>       
         </ScrollView>
     </Page>
 </template>
@@ -32,9 +33,7 @@
     export default {
         methods: {
             onItemTap: function(args) {
-               // utilsModule.openUrl("http:\/\/hbbtv2.ert.gr\/video.php\/geo\/w\/vid\/6983c47bbb1a7c61f586ca7088d3b4b2.mp4");
             const i = new android.content.Intent(android.content.Intent.ACTION_VIEW);
-            //i.setPackage("com.mxtech.videoplayer.ad");
             i.setDataAndType(android.net.Uri.parse(this.mv.mp4), "video/mp4");
             application.android.foregroundActivity.startActivity(i);
             },
@@ -55,18 +54,11 @@
             },      
         },
 
-        props: ["movie"], 
+        props: ["msitem"], 
         
         data() {
             return {
-                mv: this.$props.movie, 
-                bcpage: {
-                    'backgroud-color': 'black',
-                    'background-image': 'url("'+this.$props.movie.bg_img_url+'")',
-                    'background-repeat': 'no-repeat',
-                    'background-position': 'right top',
-                    'background-size': 'auto',
-                    },
+                mv: this.$props.msitem, 
             };
         },
         

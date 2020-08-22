@@ -12,36 +12,22 @@
         <ScrollView  orientation="vertical">
         <StackLayout v-if="ok" orientation="vertical">
         <GridLayout columns="50,250,*" rows="auto" >
-             <Image row="0" col="0" colSpan="3" :src="'http://hbbtv.ert.gr'+paidika[idx].bg_img_url" loadMode="async" horizontalAlignment="right" stretch="fill"  /> 
+             <Image row="0" col="0" colSpan="3" :src="'http://hbbtv.ert.gr'+paidika[0].items[idx].bg_img_url" loadMode="async" horizontalAlignment="right" stretch="fill"  /> 
              <StackLayout row="0" col="0" colSpan="2" class="stdown">
-                <HtmlView class="h4" :html="paidika[idx].title" style="color: white;" />
-                <HtmlView class="h4" :html="paidika[idx].short_desc" row="0" col="0" colSpan="2" textWrap="True" style="color: white;" />
+                <HtmlView class="h4" :html="paidika[0].items[idx].title" style="color: white;" />
+                <HtmlView class="h4" :html="paidika[0].items[idx].short_desc" row="0" col="0" colSpan="2" textWrap="True" style="color: white;" />
             </StackLayout>
         </GridLayout>
-            <Label text="Παιδικά" class="h2" />                        
+        <StackLayout v-for="(list, listindex) in paidika">
+            <HtmlView class="h2" :html="list.masterCategory" />
             <ScrollView orientation="horizontal">
                 <StackLayout orientation="horizontal" >
-                    <GridLayout v-for="(paid, index) in paidika" rows="156" columns="277" @tap="onItemTap(index, 1)" >
-                        <Image row="0" col="0" :src="'http://hbbtv.ert.gr'+paid.menu_img_url" class="card" loadMode="async" stretch="aspectFill"  />
+                    <GridLayout v-for="(item, index) in list.items" rows="156" columns="277" @tap="onItemTap(listindex, index)" >
+                        <Image row="0" col="0" :src="'http://hbbtv.ert.gr'+item.menu_img_url" class="card"  loadMode="async" stretch="aspectFill"  />
                     </GridLayout>
                 </StackLayout>
-            </ScrollView>   
-            <Label text="Μένουμε σπίτι" class="h2" />                        
-            <ScrollView orientation="horizontal">
-                <StackLayout orientation="horizontal" >
-                    <GridLayout v-for="(mn, index) in mensp" rows="156" columns="277" @tap="onItemTap(index, 2)" >
-                        <Image row="0" col="0" :src="'http://hbbtv.ert.gr'+mn.menu_img_url" class="card" loadMode="async" stretch="aspectFill"  />
-                    </GridLayout>
-                </StackLayout>
-            </ScrollView>   
-            <Label text="Ιστορίες" class="h2" />                        
-            <ScrollView orientation="horizontal">
-                <StackLayout orientation="horizontal" >
-                    <GridLayout v-for="(ist, index) in istories" rows="156" columns="277" @tap="onItemTap(index, 3)" >
-                        <Image row="0" col="0" :src="'http://hbbtv.ert.gr'+ist.menu_img_url" class="card" loadMode="async" stretch="aspectFill"  />
-                    </GridLayout>
-                </StackLayout>
-            </ScrollView>   
+            </ScrollView>              
+        </StackLayout>                
         </StackLayout>
         </ScrollView>
 
@@ -63,17 +49,7 @@
             }, 
             onItemTap: function(args, no) {
                 var seira = "";
-                switch(no) {
-                    case 1: 
-                        seira = this.paidika[args];
-                        break;
-                    case 2:
-                        seira = this.mensp[args];
-                        break;
-                    case 3:
-                        seira = this.istories[args];
-                        break;
-                    };
+                seira = this.paidika[l].items[args];
                 this.$goto('Seires', {
                     animated: true,
                     transition: {
@@ -83,7 +59,7 @@
                     transitioniOS: {},
                     transitionAndroid: {},
                     props: {
-                        seira: seira
+                        msitem: seira
                     }
                 });
             },                                   
@@ -96,12 +72,8 @@
                 method: "GET",
                 }).then(response => {
                 this.paidika = response.content.toJSON().services.filter(function (chain) {
-                        return chain.masterCategory === "&Delta;&iota;&alpha;&sigma;&kappa;&#941;&delta;&alpha;&sigma;&eta;";})[0].items;
-                this.mensp = response.content.toJSON().services.filter(function (chain) {
-                        return chain.masterCategory === "&Mu;&alpha;&theta;&alpha;&#943;&nu;&omicron;&upsilon;&mu;&epsilon; &sigma;&tau;&omicron; &sigma;&pi;&#943;&tau;&iota;";})[0].items;
-                this.istories = response.content.toJSON().services.filter(function (chain) {
-                        return chain.masterCategory === "&Iota;&sigma;&tau;&omicron;&rho;&#943;&epsilon;&sigmaf; &gamma;&iota;&alpha; &pi;&alpha;&iota;&delta;&iota;&#940;";})[0].items;
-                this.idx = Math.floor(Math.random() * this.paidika.length);
+                        return chain.id === "29";});     
+                this.idx = Math.floor(Math.random() * this.paidika[0].items.length);
                 this.ok = true;
                 }, error => {
                 console.error(error);
