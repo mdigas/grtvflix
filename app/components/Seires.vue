@@ -12,8 +12,8 @@
             </StackLayout>        
             <ScrollView row="2" col="0" colSpan="4" orientation="horizontal" >
                 <StackLayout orientation="horizontal" >
-                     <GridLayout  v-for="(episode, index) in episodes" rows="156, auto" columns="277"  @tap="onTapPlay(index)" >
-                            <Image row="0" col="0" :src="episode.image" class="card"  loadMode="async" stretch="aspectFill"  />
+                     <GridLayout  v-for="(episode, index) in episodes" rows="156, auto" columns="277" >
+                            <Image row="0" col="0" :src="episode.image" class="card"  loadMode="async" stretch="aspectFill" @tap="onTapPlay(index)" />
                             <StackLayout row="1" col="0" class="subcard" >
                                 <HtmlView v-if="episode.title" :html="episode.title" class="eptitle" />
                                 <Label v-if="episode.expiration_date" class="epsmalld" :text="'Διάρκεια: '+episode.dur+'    Διαθ.Μέχρι: '+episode.expiration_date" />
@@ -23,6 +23,12 @@
                                         <Span v-if="episode.episode_num" :text="'E:'+episode.episode_num" />
                                     </FormattedString>
                                 </Label>
+                                <Button row="0" col="4" class="btnplay" @tap="onDownloadTap(index)">
+                                    <FormattedString><Span text="Download  " ></Span>
+                                    <Span class="fas" text.decode="&#xf0ab;" fontAttributes="Bold"></Span>
+                                    <Span v-if="display === index" :text="'  '+progress"  />
+                                    </FormattedString>
+                                </Button>
                             </StackLayout>
                      </GridLayout>
                 </StackLayout>
@@ -45,6 +51,28 @@
                 application.android.foregroundActivity.startActivity(i);
             };
             },
+            onDownloadTap: function(args) {
+                this.display = args;
+                console.log('*********** '+this.display);
+                var Downloader = require('nativescript-downloader').Downloader;
+                var downloader = new Downloader();
+                var imageDownloaderId = downloader.createDownload({
+                url: this.episodes[args].mp4
+                });
+
+                downloader
+                .start(imageDownloaderId, progressData => {
+                    this.progress = progressData.value+'%';
+                    console.log(`Progress : ${progressData.value}%`);
+                })
+                .then(completed => {
+                    this.progress[args] = 'downloaded';
+                    console.log(`Image : ${completed.path}`);
+                })
+                .catch(error => {
+                    console.log(error.message);
+                });
+            },            
         },
 
         props: ["msitem"],
@@ -67,6 +95,8 @@
         data() {
             return {
                 mv: this.$props.msitem,
+                progress: '',
+                display: '',
                 episodes: [],
             };                
         },

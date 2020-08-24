@@ -12,7 +12,7 @@
                 <HtmlView class="h5" :html="mv.short_desc" />
                 <Label  v-if="mv.expiration_date" class="h5" :text="'Διαθέσιμο μέχρι: '+mv.expiration_date"  />
              </StackLayout>
-            <GridLayout row="2" col="1" colSpan="2" columns="*, auto, *" rows="*" >
+            <GridLayout row="2" col="1" colSpan="2" columns="*, auto, *, auto, *" rows="*" >
                 <Button row="0" col="0" class="btnplay" @tap="onTapPlay" >    
                     <FormattedString><Span text="Προβολή  " ></Span>
                     <Span class="fas" text.decode="&#xf144;" fontAttributes="Bold"></Span></FormattedString>
@@ -20,6 +20,12 @@
                 <Button row="0" col="2" class="btnplay" @tap="onmoreTap">
                     <FormattedString><Span text="Περισσότερα  " ></Span>
                     <Span class="fas" text.decode="&#xf05a;" fontAttributes="Bold"></Span></FormattedString>
+                </Button>
+                <Button row="0" col="4" class="btnplay" @tap="onDownloadTap">
+                    <FormattedString><Span text="Download  " ></Span>
+                    <Span class="fas" text.decode="&#xf0ab;" fontAttributes="Bold"></Span>
+                    <Span :text="'  '+progress" ></Span>
+                    </FormattedString>
                 </Button>
             </GridLayout>                    
         </GridLayout>       
@@ -33,9 +39,29 @@
     export default {
         methods: {
             onItemTap: function(args) {
-            const i = new android.content.Intent(android.content.Intent.ACTION_VIEW);
-            i.setDataAndType(android.net.Uri.parse(this.mv.mp4), "video/mp4");
-            application.android.foregroundActivity.startActivity(i);
+                const i = new android.content.Intent(android.content.Intent.ACTION_VIEW);
+                i.setDataAndType(android.net.Uri.parse(this.mv.mp4), "video/mp4");
+                application.android.foregroundActivity.startActivity(i);
+            },
+            onDownloadTap: function(args) {
+                var Downloader = require('nativescript-downloader').Downloader;
+                var downloader = new Downloader();
+                var imageDownloaderId = downloader.createDownload({
+                url: this.mv.mp4
+                });
+
+                downloader
+                .start(imageDownloaderId, progressData => {
+                    this.progress = progressData.value+'%';
+                    console.log(`Progress : ${progressData.value}%`);
+                })
+                .then(completed => {
+                    this.progress = 'downloaded';
+                    console.log(`Image : ${completed.path}`);
+                })
+                .catch(error => {
+                    console.log(error.message);
+                });
             },
             onmoreTap: function(args) {
                 console.log("Item with index: " + args + " tapped");
@@ -59,6 +85,7 @@
         data() {
             return {
                 mv: this.$props.msitem, 
+                progress: '',
             };
         },
         

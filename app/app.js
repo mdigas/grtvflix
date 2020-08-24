@@ -29,6 +29,9 @@ app.on('orientationChanged', (evt) => {
   Vue.prototype.$orientation = evt.newValue;
 });
 
+var Downloader = require('nativescript-downloader').Downloader;
+Downloader.init();
+
 new Vue({
     render (h) {
         return h(
