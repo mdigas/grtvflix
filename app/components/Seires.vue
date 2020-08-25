@@ -23,12 +23,24 @@
                                         <Span v-if="episode.episode_num" :text="'E:'+episode.episode_num" />
                                     </FormattedString>
                                 </Label>
-                                <Button row="0" col="4" class="btnplay" @tap="onDownloadTap(index)">
-                                    <FormattedString><Span text="Download  " ></Span>
-                                    <Span class="fas" text.decode="&#xf0ab;" fontAttributes="Bold"></Span>
-                                    <Span v-if="display === index" :text="'  '+progress"  />
-                                    </FormattedString>
-                                </Button>
+                                <GridLayout columns="*,*,*" rows="auto" >
+                                    <Button row="0" col="0" class="btnplay" @tap="onDownloadTap(index)">
+                                        <FormattedString>
+                                        <Span class="fas" text.decode="&#xf0ab;" fontAttributes="Bold"></Span>
+                                        <Span v-if="display === index" :text="'  '+progress"  />
+                                        </FormattedString>
+                                    </Button>
+                                    <Button row="0" col="1" class="btnplay" @tap="onDPlay(index)">
+                                        <FormattedString>
+                                            <Span class="fas" text.decode="&#xf144;" fontAttributes="Bold"></Span>
+                                        </FormattedString>
+                                    </Button>
+                                    <Button row="0" col="2" class="btnplay" @tap="onDel(index)">
+                                        <FormattedString>
+                                            <Span class="fas" text.decode="&#xf2ed;" fontAttributes="Bold"></Span>
+                                        </FormattedString>
+                                    </Button>
+                                </GridLayout>                                
                             </StackLayout>
                      </GridLayout>
                 </StackLayout>
@@ -41,23 +53,49 @@
 <script>
     import * as http from "http";
     var utilsModule = require("tns-core-modules/utils/utils");
+    import * as fs from 'tns-core-modules/file-system';
     import * as application from 'application';
+    const permissions = require( "nativescript-permissions" );
     export default {
         methods: {
             onTapPlay: function(args) {
-            if (this.episodes[args].mp4 != "") {
-                const i = new android.content.Intent(android.content.Intent.ACTION_VIEW);
-                i.setDataAndType(android.net.Uri.parse(this.episodes[args].mp4), "video/mp4");
-                application.android.foregroundActivity.startActivity(i);
-            };
+                if (this.episodes[args].mp4 != "") {
+                    const i = new android.content.Intent(android.content.Intent.ACTION_VIEW);
+                    i.setDataAndType(android.net.Uri.parse(this.episodes[args].mp4), "video/mp4");
+                    application.android.foregroundActivity.startActivity(i);
+                };
             },
+            onDPlay: function(args) {
+                var url =this.episodes[args].mp4;
+                var filename = url.substring(url.lastIndexOf('/')+1);
+                if (fs.File.exists('/sdcard/Download/'+filename)){
+                    let intent = new android.content.Intent(android.content.Intent.ACTION_VIEW);
+                    let mimeType = "video/mp4";
+                    let context = application.android.currentContext;
+                    let nativeFile = new java.io.File('/sdcard/Download/'+filename);
+                    let uri = androidx.core.content.FileProvider.getUriForFile(context, 'org.nativescript.ertflix.provider', nativeFile); // Here add ".provider" after your app package name
+                    intent.setDataAndType(uri, mimeType);
+                    intent.addFlags(android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    application.android.foregroundActivity.startActivity(android.content.Intent.createChooser(intent, 'Open File...'));
+                };
+            },
+            onDel: function(args) {
+                var url =this.episodes[args].mp4;
+                var filename = url.substring(url.lastIndexOf('/')+1);
+                var file = fs.File.fromPath('/sdcard/Download/'+filename);
+                file.remove();
+            },            
             onDownloadTap: function(args) {
+                permissions.requestPermission(android.Manifest.permission.READ_CONTACTS, "For Downloading");
                 this.display = args;
-                console.log('*********** '+this.display);
+                var url =this.episodes[args].mp4;
+                var filename = url.substring(url.lastIndexOf('/')+1);
                 var Downloader = require('nativescript-downloader').Downloader;
                 var downloader = new Downloader();
                 var imageDownloaderId = downloader.createDownload({
-                url: this.episodes[args].mp4
+                url: this.episodes[args].mp4,
+                path: '/sdcard/Download',
+                fileName: filename
                 });
 
                 downloader
