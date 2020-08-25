@@ -55,14 +55,14 @@
     var utilsModule = require("tns-core-modules/utils/utils");
     import * as fs from 'tns-core-modules/file-system';
     import * as application from 'application';
-    const permissions = require( "nativescript-permissions" );
+    import * as permissions from 'nativescript-permissions'
     export default {
         methods: {
             onTapPlay: function(args) {
                 if (this.episodes[args].mp4 != "") {
                     const i = new android.content.Intent(android.content.Intent.ACTION_VIEW);
                     i.setDataAndType(android.net.Uri.parse(this.episodes[args].mp4), "video/mp4");
-                    application.android.foregroundActivity.startActivity(i);
+                    application.android.foregroundActivity.startActivity(android.content.Intent.createChooser(i, 'Open File...'));
                 };
             },
             onDPlay: function(args) {
@@ -86,7 +86,17 @@
                 file.remove();
             },            
             onDownloadTap: function(args) {
-                permissions.requestPermission(android.Manifest.permission.READ_CONTACTS, "For Downloading");
+                /* list of permissions needed */
+                let permissionsNeeded = [
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE
+                ];
+                /* showing up permissions dialog */
+                permissions
+                    .requestPermissions(permissionsNeeded, "For Downloading")
+                    .then(() => this.allowExecution = true)
+                    .catch(() => this.allowExecution = false);
+
                 this.display = args;
                 var url =this.episodes[args].mp4;
                 var filename = url.substring(url.lastIndexOf('/')+1);
