@@ -47,7 +47,6 @@
     var utilsModule = require("tns-core-modules/utils/utils");
     import * as application from 'application';
     import * as fs from 'tns-core-modules/file-system';
-    import * as permissions from 'nativescript-permissions'
     export default {
         methods: {
             onTapPlay: function(args) {
@@ -116,24 +115,6 @@
         },
 
         props: ["msitem"], 
-
-        created: function() {
-
-                /* list of permissions needed */
-                let permissionsNeeded = [
-                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    android.Manifest.permission.READ_EXTERNAL_STORAGE,
-                    android.Manifest.permission.WRITE_INTERNAL_STORAGE,
-                    android.Manifest.permission.READ_INTERNAL_STORAGE
-                ];
-                /* showing up permissions dialog */
-                permissions
-                    .requestPermissions(permissionsNeeded, "For Downloading")
-                    .then(() => this.allowExecution = true)
-                    .catch(() => this.allowExecution = false);
-
-        },
-        
         data() {
             return {
                 mv: this.$props.msitem, 
