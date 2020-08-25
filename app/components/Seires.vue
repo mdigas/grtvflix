@@ -85,17 +85,6 @@
                 file.remove();
             },            
             onDownloadTap: function(args) {
-                /* list of permissions needed */
-                let permissionsNeeded = [
-                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    android.Manifest.permission.READ_EXTERNAL_STORAGE
-                ];
-                /* showing up permissions dialog */
-                permissions
-                    .requestPermissions(permissionsNeeded, "For Downloading")
-                    .then(() => this.allowExecution = true)
-                    .catch(() => this.allowExecution = false);
-
                 this.display = args;
                 var url =this.episodes[args].mp4;
                 var filename = url.substring(url.lastIndexOf('/')+1);
