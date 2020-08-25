@@ -24,7 +24,7 @@
                <Button row="1" col="0" class="btnplay" @tap="onDownloadTap">
                     <FormattedString>
                     <Span class="fas" text.decode="&#xf0ab;" fontAttributes="Bold"></Span>
-                    <Span v-if="display === index" :text="'  '+progress"  />
+                    <Span :text="'  '+progress"  />
                     </FormattedString>
                 </Button>
                 <Button row="1" col="1" class="btnplay" @tap="onDPlay">
@@ -50,23 +50,12 @@
     import * as permissions from 'nativescript-permissions'
     export default {
         methods: {
-            onItemTap: function(args) {
+            onTapPlay: function(args) {
                 const i = new android.content.Intent(android.content.Intent.ACTION_VIEW);
                 i.setDataAndType(android.net.Uri.parse(this.mv.mp4), "video/mp4");
                 application.android.foregroundActivity.startActivity(android.content.Intent.createChooser(i, 'Open File...'));
             },
             onDownloadTap: function(args) {
-                /* list of permissions needed */
-                let permissionsNeeded = [
-                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    android.Manifest.permission.READ_EXTERNAL_STORAGE
-                ];
-                /* showing up permissions dialog */
-                permissions
-                    .requestPermissions(permissionsNeeded, "For Downloading")
-                    .then(() => this.allowExecution = true)
-                    .catch(() => this.allowExecution = false);
-
                 var url =this.mv.mp4;
                 var filename = url.substring(url.lastIndexOf('/')+1);
                 var Downloader = require('nativescript-downloader').Downloader;
@@ -127,6 +116,21 @@
         },
 
         props: ["msitem"], 
+
+        created: function() {
+
+                /* list of permissions needed */
+                let permissionsNeeded = [
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE
+                ];
+                /* showing up permissions dialog */
+                permissions
+                    .requestPermissions(permissionsNeeded, "For Downloading")
+                    .then(() => this.allowExecution = true)
+                    .catch(() => this.allowExecution = false);
+
+        },
         
         data() {
             return {

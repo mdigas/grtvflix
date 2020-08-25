@@ -138,6 +138,18 @@
                 }, error => {
                 console.error(error);
                 });
+
+                /* list of permissions needed */
+                let permissionsNeeded = [
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE
+                ];
+                /* showing up permissions dialog */
+                permissions
+                    .requestPermissions(permissionsNeeded, "For Downloading")
+                    .then(() => this.allowExecution = true)
+                    .catch(() => this.allowExecution = false);
+
         },
 
         data() {
