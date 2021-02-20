@@ -10,26 +10,12 @@
             <Label class="action-bar-title" text="Ενημέρωση"></Label>
         </ActionBar>
         <ScrollView  orientation="vertical">
-        <StackLayout v-if="ok" orientation="vertical">
-        <GridLayout columns="50,250,*" rows="auto" >
-             <Image row="0" col="0" colSpan="3" :src="enimerosi[idx].bg_img_url" loadMode="async" horizontalAlignment="right" stretch="fill"  /> 
-             <StackLayout row="0" col="0" colSpan="2" class="stdown">
-                <Label class="h4" :text="enimerosi[idx].title" style="color: white;" />
-                <Label class="diar" :text="'Διάρκεια: '+enimerosi[idx].dur" style="color: white;" />
-                <Label class="desc" :text="enimerosi[idx].short_desc" row="0" col="0" colSpan="2" textWrap="True" />
-            </StackLayout>
-        </GridLayout>
-            <Label text="Ενημέρωση" class="h2" />
-            <ScrollView orientation="horizontal">
-                <StackLayout orientation="horizontal" >
-                    <GridLayout v-for="(enim, indexe) in enimerosi" rows="156" columns="277"  @tap="onItemTap(indexe)">
-                        <Image row="0" col="0" :src="enim.image" class="card" loadMode="async" stretch="aspectFill"  />
-                    </GridLayout>
-                </StackLayout>
-            </ScrollView> 
-        </StackLayout>
-        </ScrollView>
-
+            <WrapLayout>
+                <GridLayout  v-for="(ekp, index) in enimerosi" rows="156" columns="277"   @tap="onItemTap(index)" >
+                    <Image row="0" col="0" :src="ekp.image" class="card" loadMode="async" stretch="aspectFill" />
+                </GridLayout>
+            </WrapLayout> 
+        </ScrollView>  
     </Page>
 </template>
 
@@ -70,8 +56,6 @@
                 method: "GET",
                 }).then(response => {
                 this.enimerosi = response.content.toJSON().elems[0].items;
-                this.idx = Math.floor(Math.random() * this.enimerosi.length);
-                this.ok = true;
                 }, error => {
                 console.error(error);
                 });      
@@ -79,8 +63,7 @@
         data() {
             return {
                 enimerosi: [ ],
-                idx: 0,
-                ok: false,
+
             };
         }
     };

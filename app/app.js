@@ -5,32 +5,33 @@ import router from './router'
 // Vue.config.silent = (TNS_ENV === 'production');
 Vue.config.silent = false;
 
+// Manual Router 
 Vue.prototype.$router = router;
+Vue.prototype.$goto = function (to, options) {
+  this.$navigateTo(this.$router[to], options)
+}
 
-const platformModule = require("tns-core-modules/platform");
-if(platformModule.screen.mainScreen.widthPixels >platformModule.screen.mainScreen.heightPixels){ 
+// SideBar
+import RadSideDrawer from "nativescript-ui-sidedrawer/vue";
+Vue.use(RadSideDrawer);
+
+// Download Manager
+var Downloader = require('nativescript-downloader').Downloader;
+Downloader.init();
+
+// Layout change on orientation change
+import * as platform from 'platform';
+if(platform.Screen.mainScreen.widthPixels > platform.Screen.mainScreen.heightPixels){ 
   Vue.prototype.$orientation = 'landscape';}
 else{
   Vue.prototype.$orientation = 'portrait';
 };
-console.log(Vue.prototype.$orientation);
 
-Vue.prototype.$goto = function (to, options) {
-    this.$navigateTo(this.$router[to], options)
-}
-import RadSideDrawer from "nativescript-ui-sidedrawer/vue";
-Vue.use(RadSideDrawer);
-
-
-import * as platform from 'platform';
 import * as app from "tns-core-modules/application";
 app.on('orientationChanged', (evt) => {
   console.log(evt.newValue); //landscape or portrait
   Vue.prototype.$orientation = evt.newValue;
 });
-
-var Downloader = require('nativescript-downloader').Downloader;
-Downloader.init();
 
 new Vue({
     render (h) {

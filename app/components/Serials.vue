@@ -11,13 +11,6 @@
         </ActionBar>
         <ScrollView  orientation="vertical">
         <StackLayout v-if="ok" orientation="vertical">
-        <GridLayout columns="50,250,*" rows="auto" >
-             <Image row="0" col="0" colSpan="3" :src="'http://hbbtv.ert.gr'+seires[0].items[idx].bg_img_url" loadMode="async" horizontalAlignment="right" stretch="fill"  /> 
-             <StackLayout row="0" col="0" colSpan="2" class="stdown">
-                <HtmlView class="h4" :html="seires[0].items[idx].title" style="color: white;" />
-                <HtmlView class="h4" :html="seires[0].items[idx].short_desc" row="0" col="0" colSpan="2" textWrap="True" style="color: white;" />
-            </StackLayout>
-        </GridLayout>
             <StackLayout v-for="(list, listindex) in seires">
                 <HtmlView class="h2" :html="list.masterCategory" />
                 <ScrollView orientation="horizontal">

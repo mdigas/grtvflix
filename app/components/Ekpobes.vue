@@ -11,18 +11,21 @@
         </ActionBar>
         <ScrollView  orientation="vertical">
         <StackLayout v-if="ok" orientation="vertical">
-        <GridLayout columns="50,250,*" rows="auto" >
-             <Image row="0" col="0" colSpan="3" :src="'http://hbbtv.ert.gr'+documentaries[0].items[idx].bg_img_url" loadMode="async" horizontalAlignment="right" stretch="fill"  /> 
-             <StackLayout row="0" col="0" colSpan="2" class="stdown">
-                <HtmlView class="h4" :html="documentaries[0].items[idx].title" style="color: white;" />
-                <HtmlView class="h4" :html="documentaries[0].items[idx].short_desc" row="0" col="0" colSpan="2" textWrap="True" style="color: white;" />
-            </StackLayout>
-        </GridLayout>
+        <StackLayout v-for="(list, listindex) in xdoc">
+            <HtmlView class="h2" :html="list.masterCategory" />
+            <ScrollView orientation="horizontal">
+                <StackLayout orientation="horizontal" >
+                    <GridLayout v-for="(item, index) in list.items" rows="156" columns="277" @tap="onItemTap(listindex, index, 2)" >
+                        <Image row="0" col="0" :src="'http://hbbtv.ert.gr'+item.menu_img_url" class="card"  loadMode="async" stretch="aspectFill"  />
+                    </GridLayout>
+                </StackLayout>
+            </ScrollView>              
+        </StackLayout> 
         <StackLayout v-for="(list, listindex) in documentaries">
             <HtmlView class="h2" :html="list.masterCategory" />
             <ScrollView orientation="horizontal">
                 <StackLayout orientation="horizontal" >
-                    <GridLayout v-for="(item, index) in list.items" rows="156" columns="277" @tap="onItemTap(listindex, index)" >
+                    <GridLayout v-for="(item, index) in list.items" rows="156" columns="277" @tap="onItemTap(listindex, index, 1)" >
                         <Image row="0" col="0" :src="'http://hbbtv.ert.gr'+item.menu_img_url" class="card"  loadMode="async" stretch="aspectFill"  />
                     </GridLayout>
                 </StackLayout>
@@ -47,9 +50,16 @@
             onDrawerButtonTap() {
                 utils.showDrawer();
             },
-            onItemTap: function(l, args) {
+            onItemTap: function(l,args,no) {
                 var seira = "";
-                seira = this.documentaries[l].items[args];
+                switch(no) {
+                    case 1:
+                        seira = this.seires[l].items[args];
+                        break; 
+                    case 2:
+                        seira = this.xdoc[l].items[args];
+                        break;                                                
+                    };
                 this.$goto('Seires', {
                     animated: true,
                     transition: {
@@ -72,6 +82,8 @@
                 url: url2,
                 method: "GET",
                 }).then(response => {
+                this.xdoc = response.content.toJSON().services.filter(function (chain) {
+                        return chain.id === "42";});                    
                 this.documentaries = response.content.toJSON().services.filter(function (chain) {
                         return chain.id === "26";});
                 this.idx = Math.floor(Math.random() * this.documentaries[0].items.length);
@@ -84,9 +96,7 @@
         data() {
             return {
                 documentaries: [ ],
-                eldocumentaries: [ ],                
-                entertmns: [ ],
-                interviews: [ ],
+                xdoc: [ ],                
                 idx: 0,
                 ok: false,
             };

@@ -3,42 +3,82 @@
         <ActionBar class="action-bar" title=" " android.icon="res://icon" android.iconVisibility="always">
                   <NavigationButton text="Go back" android.systemIcon="ic_menu_back" @tap="$navigateBack" />
         </ActionBar>  
-        <ScrollView>
-            <GridLayout columns="50,*,*,*" rows="150,*,*" >
-            <Image row="0" col="0" colSpan="4" rowSpan="3" :src="this.$props.msitem.bg_img_url" loadMode="async" horizontalAlignment="right" stretch="fill"  /> 
-             <StackLayout row="1" col="1" colSpan="2" >
-                <Label class="h4" :text="mv.title" />
-                <Label class="h5" :text="'Διάρκεια: '+mv.dur" />
-                <HtmlView class="h5" :html="mv.short_desc" />
-                <Label  v-if="mv.expiration_date" class="h5" :text="'Διαθέσιμο μέχρι: '+mv.expiration_date"  />
-             </StackLayout>
-            <GridLayout row="2" col="1" colSpan="2" columns="*,*,*" rows="*,*" >
-                <Button row="0" col="0" colSpan="2" class="btnplay" @tap="onTapPlay" >    
-                    <FormattedString><Span text="Προβολή  " ></Span>
-                    <Span class="fas" text.decode="&#xf144;" fontAttributes="Bold"></Span></FormattedString>
-                </Button>
-                <Button row="0" col="2" class="btnplay" @tap="onmoreTap">
-                    <FormattedString>
-                    <Span class="fas" text.decode="&#xf05a;" fontAttributes="Bold"></Span></FormattedString>
-                </Button>
-               <Button row="1" col="0" class="btnplay" @tap="onDownloadTap">
-                    <FormattedString>
-                    <Span class="fas" text.decode="&#xf0ab;" fontAttributes="Bold"></Span>
-                    <Span :text="'  '+progress"  />
-                    </FormattedString>
-                </Button>
-                <Button row="1" col="1" class="btnplay" @tap="onDPlay">
-                    <FormattedString>
-                        <Span class="fas" text.decode="&#xf144;" fontAttributes="Bold"></Span>
-                    </FormattedString>
-                </Button>
-                <Button row="1" col="2" class="btnplay" @tap="onDel">
-                    <FormattedString>
-                       <Span class="fas" text.decode="&#xf2ed;" fontAttributes="Bold"></Span>
-                    </FormattedString>
-                </Button>
-            </GridLayout>                    
-        </GridLayout>       
+        <ScrollView v-if="$orientation === 'portrait'">
+            <StackLayout>
+                <Image :src="this.$props.msitem.org" loadMode="async" horizontalAlignment="center" stretch="aspectFit" /> 
+                <GridLayout columns="*,*,*" rows="*,*" >
+                    <Button row="0" col="0" colSpan="2" class="btnplay" @tap="onTapPlay" >    
+                        <FormattedString><Span text="Προβολή  " ></Span>
+                        <Span class="fas" text.decode="&#xf144;" fontAttributes="Bold"></Span></FormattedString>
+                    </Button>
+                    <Button row="0" col="2" class="btnplay" @tap="onmoreTap">
+                        <FormattedString>
+                        <Span class="fas" text.decode="&#xf05a;" fontAttributes="Bold"></Span></FormattedString>
+                    </Button>
+                    <Button row="1" col="0" class="btnplay" @tap="onDownloadTap">
+                        <FormattedString>
+                        <Span class="fas" text.decode="&#xf0ab;" fontAttributes="Bold"></Span>
+                        <Span :text="'  '+progress"  />
+                        </FormattedString>
+                    </Button>
+                    <Button row="1" col="1" class="btnplay" @tap="onDPlay">
+                        <FormattedString>
+                            <Span class="fas" text.decode="&#xf144;" fontAttributes="Bold"></Span>
+                        </FormattedString>
+                    </Button>
+                    <Button row="1" col="2" class="btnplay" @tap="onDel">
+                        <FormattedString>
+                        <Span class="fas" text.decode="&#xf2ed;" fontAttributes="Bold"></Span>
+                        </FormattedString>
+                    </Button>
+                </GridLayout>                    
+                <Label class="title" :text="mv.title" textWrap="true"/>
+                <Label class="duration" :text="'Διάρκεια: '+mv.dur" />
+                <HtmlView class="smalldesc" :html="mv.short_desc" textWrap="true"/>
+                <Label  v-if="mv.expiration_date" class="available" :text="'Διαθέσιμο μέχρι: '+mv.expiration_date"  />
+            </StackLayout>       
+        </ScrollView>
+        <ScrollView v-if="$orientation === 'landscape'">
+           <GridLayout columns="*,50,400" > 
+            <StackLayout col="0">
+                <Image :src="this.$props.msitem.org" loadMode="async" horizontalAlignment="center" stretch="aspectFit" /> 
+                <GridLayout columns="*,*,*" rows="*,*" >
+                    <Button row="0" col="0" colSpan="2" class="btnplay" @tap="onTapPlay" >    
+                        <FormattedString><Span text="Προβολή  " ></Span>
+                        <Span class="fas" text.decode="&#xf144;" fontAttributes="Bold"></Span></FormattedString>
+                    </Button>
+                    <Button row="0" col="2" class="btnplay" @tap="onmoreTap">
+                        <FormattedString>
+                        <Span class="fas" text.decode="&#xf05a;" fontAttributes="Bold"></Span></FormattedString>
+                    </Button>
+                    <Button row="1" col="0" class="btnplay" @tap="onDownloadTap">
+                        <FormattedString>
+                        <Span class="fas" text.decode="&#xf0ab;" fontAttributes="Bold"></Span>
+                        <Span :text="'  '+progress"  />
+                        </FormattedString>
+                    </Button>
+                    <Button row="1" col="1" class="btnplay" @tap="onDPlay">
+                        <FormattedString>
+                            <Span class="fas" text.decode="&#xf144;" fontAttributes="Bold"></Span>
+                        </FormattedString>
+                    </Button>
+                    <Button row="1" col="2" class="btnplay" @tap="onDel">
+                        <FormattedString>
+                        <Span class="fas" text.decode="&#xf2ed;" fontAttributes="Bold"></Span>
+                        </FormattedString>
+                    </Button>
+                </GridLayout>                    
+                <Label class="title" :text="mv.title" textWrap="true"/>
+                <Label class="duration" :text="'Διάρκεια: '+mv.dur" />
+                <HtmlView class="smalldesc" :html="mv.short_desc" textWrap="true"/>
+                <Label  v-if="mv.expiration_date" class="available" :text="'Διαθέσιμο μέχρι: '+mv.expiration_date"  />
+            </StackLayout>
+           <ScrollView col="2">
+            <StackLayout orientation="vertical" class="info" >
+               <HtmlView class="h5" :html="starthtml+mv.desc+endhtml" />	
+            </StackLayout>  
+            </ScrollView> 
+          </GridLayout>      
         </ScrollView>
     </Page>
 </template>
@@ -119,6 +159,8 @@
             return {
                 mv: this.$props.msitem, 
                 progress: '',
+                starthtml: '<div style="color: white;background-color: black;"',
+                endhtml: '</div>',
             };
         },
         

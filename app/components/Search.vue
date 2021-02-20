@@ -14,11 +14,11 @@
             <StackLayout>
                     <Label col="0" ><FormattedString><Span text.decode="&#xf002;" class="nt-icon fas"></Span>
                     <Span text="  Αναζήτηση" class="h2"></Span></FormattedString></Label> 
-                <SearchBar v-model="searchQuery" hint="Αναζήτηση" textFieldHintColor="#FFFFFF" class="search" @submit="onSearchSubmit" />
+                <SearchBar v-model="searchQuery" class="search" @submit="onSearchSubmit" />
                     <WrapLayout>
                         <GridLayout  v-for="(ekp, index) in ekpompes" rows="156, auto" columns="277"  @tap="onTapPlay(index)" >
                             <Image row="0" col="0" :src="ekp.bild" class="card"  loadMode="async" stretch="aspectFill"  />
-                            <HtmlView row="1" col="0" class="lbl" :html="ekp.title" style="color: white;" />
+                            <HtmlView row="1" col="0" class="title" :html="ekp.title" />
                         </GridLayout>
                     </WrapLayout>   
             </StackLayout>
@@ -31,6 +31,7 @@
     import * as utils from "~/shared/utils";
     var utilsModule = require("tns-core-modules/utils/utils");
     import * as application from 'application';
+    import SelectedPageService from "~/shared/selected-page-service";    
 
     export default {
         mounted() {

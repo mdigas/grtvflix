@@ -7,7 +7,7 @@
         <WrapLayout>
             <Image class="livetv" src="~/img/ert1.png" @tap="onItemTap(0)" />
             <Image class="livetv" src="~/img/ert2.png" @tap="onItemTap(1)" />
-            <Image class="livetv" src="~/img/ert3.png" @tap="onItemTap(2)"/>
+            <Image class="livetv" src="~/img/ert3.png" @tap="onItemTap(1)"/>
             <Image class="livetv" src="~/img/ertsport.png" @tap="onItemTap(3)"/>
             <Image class="livetv" src="~/img/ertworld.png" @tap="onItemTap(4)" />
             <Image class="livetv" src="~/img/ertplay1.png" @tap="onItemTap(5)" />
@@ -41,16 +41,16 @@
         data() {
             return {
                 videourl:[
-                    "https://ert-live.siliconweb.com/media/ert_1/ert_1.m3u8",
-                    "https://ert-live.siliconweb.com/media/ert_2/ert_2.m3u8",
-                    "F_jfMlJiDcc",
-                    "https://ert-live.siliconweb.com/media/ert_sports/ert_sportshigh.m3u8",
-                    "https://ert-live.siliconweb.com/media/ert_world/ert_world.m3u8",
-                    "https://ert-live.siliconweb.com/media/ert_play_1/ert_play_1.m3u8",
-                    "https://ert-live.siliconweb.com/media/ert_play_2/ert_play_2.m3u8",
-                    "https://ert-live.siliconweb.com/media/ert_play_3/ert_play_3.m3u8",
-                    "https://ert-live.siliconweb.com/media/ert_play_4/ert_play_4.m3u8",
-                    "https://ert-live.siliconweb.com/media/ert_play_5/ert_play_5.m3u8",
+                    "https://ert-live-bcbs15228.siliconweb.com/media/ert_1/ert_1medium.m3u8",
+                    "https://ert-live-bcbs15228.siliconweb.com/media/ert_2/ert_2medium.m3u8",
+                    "https://ert-live-bcbs15228.siliconweb.com/media/ert_3/ert_3medium.m3u8",
+                    "https://ert-live-bcbs15228.siliconweb.com/media/ert_sports/ert_sportshigh.m3u8",
+                    "https://ert-live-bcbs15228.siliconweb.com/media/ert_sports/ert_sports.m3u8",
+                    "https://ert-live-bcbs15228.siliconweb.com/media/ert_sports_1/ert_sports_1medium.m3u8",
+                    "https://ert-live-bcbs15228.siliconweb.com/media/ert_sports_2/ert_sports_2medium.m3u8",
+                    "https://ert-live-bcbs15228.siliconweb.com/media/ert_sports_3/ert_sports_3medium.m3u8",
+                    "https://ert-live-bcbs15228.siliconweb.com/media/ert_sports_4/ert_sports_4medium.m3u8",
+                    "https://ert-live-bcbs15228.siliconweb.com/media/ert_sports_5/ert_sports_5medium.m3u8",
 
                 ]
           

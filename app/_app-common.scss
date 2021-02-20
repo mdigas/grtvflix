@@ -1,5 +1,5 @@
-@import "~@nativescript/theme/core";
-@import "~@nativescript/theme/blue";
+//@import "~@nativescript/theme/core";
+//@import "~@nativescript/theme/blue";
 
 // Place any CSS rules you want to apply on both iOS and Android here.
 // This is where the vast majority of your CSS code goes.
@@ -34,8 +34,8 @@
 }
 
 .info{
-    margin: 5;
-    padding: 5;
+    margin: 5px;
+    padding: 5px;
 }
 
 .btnplay{
@@ -45,11 +45,45 @@
     font-weight: bold;
     margin: 1;
     padding: 1;
-    font-size: 12;
+    font-size: 18;
     border-width: 2;
     border-color: #252526;
     border-style: solid;
 } 
+
+.title{
+    color: #FFFFFF;
+    font-size: 18px;
+    font-weight: normal; 
+    margin: 20px;
+    padding: 5px;
+}
+.smalldesc{
+    color: #F8F8FF;
+    font-size: 14px;
+    font-weight: normal; 
+    margin: 20px;
+    padding: 5px;
+}
+.duration{
+    color: #4e4eee;
+    font-size: 16px;
+    font-weight: normal; 
+    margin: 20px;
+    padding: 5px;
+}
+.available{
+    color: #ee3443;
+    font-size: 16px;
+    font-weight: normal; 
+    margin: 20px;
+    padding: 5px;
+}
+.box{
+    background-color: rgba(5, 5, 5, 0.2);
+    //background-color: rgba(252, 245, 245, 0.2);
+    border-radius: 25px;
+}
 
 .eptitle{
     color: #ffffff;
@@ -75,8 +109,7 @@
 
 .card {
     background-color: #000000;
-    margin-top: 10px;
-    margin-left: 10px;
+    margin: 10px;
 }
 
 .subcard{
@@ -95,16 +128,13 @@
 
 .desc{
     margin-top: 10px;
-    color: #ffffff;    
+    color: #ffffff;   
+    font-size: 14;  
 }
-
-.stdown{
-    margin-top: 250px;
-    margin-left: 50px;
-    }
 
 .lbl{
     color: #E99935;
+    font-size: 12px;
     background-color: #000000;
     margin-top: 10px;
     margin-left: 10px;
@@ -166,9 +196,47 @@
         vertical-align: top;
         margin-top: 20%;
     }
-}
+}z
 
 // Drawer navigation custom styles
-.nt-drawer__header-image {
-    color: const(grey);
+.nt-drawer__content {
+    background-color: #181616;
 }
+.nt-drawer__header{
+    background-color: #181616;
+    text-align:center;
+} 
+.nt-drawer__body{
+    background-color: #181616;        
+}
+.p-r-10{
+    font-family: "Roboto", "Roboto-BoldItalic";
+    font-weight: bold;
+    font-size: 20;
+    padding:10;
+}
+.nt-icon{
+    vertical-align:center;
+    text-align:center;
+    font-size: 24;
+}
+.nt-drawer__list-item {
+    padding-left:15;
+    height:48;
+    horizontal-align:left;
+    width:100%;
+    orientation:horizontal;
+    vertical-align:center;
+    color: #ffffff;
+}
+.nt-drawer__list-item-selected {
+    padding-left:15;
+    height:48;
+    horizontal-align:left;
+    width:100%;
+    orientation:horizontal;
+    vertical-align:center;
+    color:#0088c9;
+    background-color:rgba(48,188,255,.15)
+}
+

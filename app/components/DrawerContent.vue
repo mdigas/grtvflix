@@ -8,54 +8,54 @@
         
             <ScrollView row="1" class="nt-drawer__body">
                 <StackLayout>
-                    <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (selectedPage === 'Home' ? ' -selected': '')" @tap="onNavigationItemTap(Home)">
+                    <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (selectedPage === 'Home' ? '-selected': '')" @tap="onNavigationItemTap(Home)">
                         <Label col="0" text.decode="&#xf015;" class="nt-icon fas"></Label>
                         <Label col="1" text="Αρχική" class="p-r-10"></Label>
                     </GridLayout>
 
-                    <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (selectedPage === 'Movies' ? ' -selected': '')" @tap="onNavigationItemTap(Movies)">
+                    <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (selectedPage === 'Movies' ? '-selected': '')" @tap="onNavigationItemTap(Movies)">
                         <Label col="0" text.decode="&#xf008;" class="nt-icon fas"></Label>
                         <Label col="1" text="Ταινίες" class="p-r-10"></Label>
                     </GridLayout>
 
-                    <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (selectedPage === 'Serials' ? ' -selected': '')" @tap="onNavigationItemTap(Serials)">
+                    <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (selectedPage === 'Serials' ? '-selected': '')" @tap="onNavigationItemTap(Serials)">
                         <Label col="0" text.decode="&#xf26c;" class="nt-icon fas"></Label>
                         <Label col="1" text="Σειρές" class="p-r-10"></Label>
                     </GridLayout>
 
-                    <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (selectedPage === 'Enimerosi' ? ' -selected': '')" @tap="onNavigationItemTap(Enimerosi)">
+                    <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (selectedPage === 'Enimerosi' ? '-selected': '')" @tap="onNavigationItemTap(Enimerosi)">
                         <Label col="0" text.decode="&#xf7a2;" class="nt-icon fas"></Label>
                         <Label col="1" text="Ενημέρωση" class="p-r-10"></Label>
                     </GridLayout>
 
-                    <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (selectedPage === 'Ekpobes' ? ' -selected': '')" @tap="onNavigationItemTap(Ekpobes)">
+                    <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (selectedPage === 'Ekpobes' ? '-selected': '')" @tap="onNavigationItemTap(Ekpobes)">
                         <Label col="0" text.decode="&#xf03d;" class="nt-icon fas"></Label>
                         <Label col="1" text="Εκπομπές" class="p-r-10"></Label>
                     </GridLayout>
 
-                    <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (selectedPage === 'Sports' ? ' -selected': '')" @tap="onNavigationItemTap(Sports)">
+                    <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (selectedPage === 'Sports' ? '-selected': '')" @tap="onNavigationItemTap(Sports)">
                         <Label col="0" text.decode="&#xf434;" class="nt-icon fas"></Label>
                         <Label col="1" text="Αθλητικά" class="p-r-10"></Label>
                     </GridLayout>
 
-                    <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (selectedPage === 'Forchild' ? ' -selected': '')" @tap="onNavigationItemTap(Forchild)">
+                    <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (selectedPage === 'Forchild' ? '-selected': '')" @tap="onNavigationItemTap(Forchild)">
                         <Label col="0" text.decode="&#xf1ae;" class="nt-icon fas"></Label>
                         <Label col="1" text="Παιδικά" class="p-r-10"></Label>
                     </GridLayout>
 
-                    <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (selectedPage === 'Archives' ? ' -selected': '')" @tap="onNavigationItemTap(Archives)">
+                    <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (selectedPage === 'Archives' ? '-selected': '')" @tap="onNavigationItemTap(Archives)">
                         <Label col="0" text.decode="&#xf187;" class="nt-icon fas"></Label>
                         <Label col="1" text="Αρχείο" class="p-r-10"></Label>
                     </GridLayout>
 
                     <StackLayout class="hr"></StackLayout>
 
-                    <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (selectedPage === 'Browse' ? ' -selected': '')" @tap="onNavigationItemTap(Browse)">
+                    <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (selectedPage === 'Browse' ? '-selected': '')" @tap="onNavigationItemTap(Browse)">
                         <Label col="0" text.decode="&#xf073;" class="nt-icon far"></Label>
                         <Label col="1" text="Μέρες πριν.." class="p-r-10"></Label>
                     </GridLayout>
 
-                    <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (selectedPage === 'Search' ? ' -selected': '')" @tap="onNavigationItemTap(Search)">
+                    <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (selectedPage === 'Search' ? '-selected': '')" @tap="onNavigationItemTap(Search)">
                         <Label col="0" text.decode="&#xf002;" class="nt-icon fas"></Label>
                         <Label col="1" text="Αναζήτηση" class="p-r-10"></Label>
                     </GridLayout>
@@ -121,27 +121,3 @@
         }
     };
 </script>
-
-<style scoped lang="scss">
-    // Start custom common variables
-    @import '~@nativescript/theme/scss/variables/blue';
-    // End custom common variables
-
-    // Custom styles
-    .nt-drawer__header{
-        background-color: #181616;
-    } 
-    .nt-drawer__body{
-        background-color: #181616;        
-    }
-    .p-r-10{
-        color: #ffffff;
-        font-family: "Roboto", "Roboto-BoldItalic";
-        font-weight: bold;
-        font-size: 20;
-    }
-    .nt-icon{
-        color: #ffffff;
-        font-size: 24;
-    }
-</style>
