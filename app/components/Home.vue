@@ -15,17 +15,15 @@
         </ActionBar>
         <ScrollView  orientation="vertical">
         <StackLayout v-if="ok" orientation="vertical">
-        <GridLayout columns="10,450,*" rows="150, auto, *" >
-             <Image row="0" col="0" colSpan="3" rowSpan="3" :src="movies[idx].org" opacity="0.8" loadMode="async" horizontalAlignment="center" stretch="aspectFit"  /> 
+             <Image :src="movies[idx].org" opacity="0.8" loadMode="async" horizontalAlignment="center" stretch="aspectFit"  /> 
              <!-- <Image row="0" col="0" colSpan="3" rowSpan="2" :src="movies[idx].bg_img_url" loadMode="async" horizontalAlignment="right" stretch="fill"  /> 
                   <Image row="0" col="0" colSpan="3" :src="movies[0].org" loadMode="async" opacity="0.5" stretch="aspectFit"  /> -->
-             <StackLayout row="1" col="1" class="box">
+             <StackLayout class="box">
                 <Label class="title" :text="movies[idx].title" textWrap="true" />
                 <Label class="duration" :text="'Διάρκεια: '+movies[idx].dur" />
                 <Label class="smalldesc" :text="movies[idx].short_desc" textWrap="true" />
             </StackLayout>
-        </GridLayout>
-            <Label text="Ταινίες" class="h2" />
+            <Label text="Ταινίες" class="h3" />
             <ScrollView orientation="horizontal">
                 <StackLayout orientation="horizontal" >
                     <GridLayout v-for="(movie, index) in movies" rows="156" columns="277" @tap="onItemTap(0, index, 1)" >
@@ -34,7 +32,7 @@
                 </StackLayout>
             </ScrollView>         
         <StackLayout v-for="(list, listindex) in seires">
-            <HtmlView class="h2" :html="list.masterCategory" />
+            <HtmlView class="h3" :html="list.title+'-'+list.masterCategory" />
             <ScrollView orientation="horizontal">
                 <StackLayout orientation="horizontal" >
                     <GridLayout v-for="(item, index) in list.items" rows="156" columns="277" @tap="onItemTap(listindex, index, 2)" >
@@ -43,44 +41,14 @@
                 </StackLayout>
             </ScrollView>              
         </StackLayout>
-        <StackLayout v-for="(list, listindex) in xdoc">
-            <HtmlView class="h2" :html="list.masterCategory" />
+            <Label text="Ενημέρωση" class="h3" />
             <ScrollView orientation="horizontal">
                 <StackLayout orientation="horizontal" >
-                    <GridLayout v-for="(item, index) in list.items" rows="156" columns="277" @tap="onItemTap(listindex, index, 6)" >
-                        <Image row="0" col="0" :src="'http://hbbtv.ert.gr'+item.menu_img_url" class="card"  loadMode="async" stretch="aspectFill"  />
-                    </GridLayout>
-                </StackLayout>
-            </ScrollView>              
-        </StackLayout> 
-        <StackLayout v-for="(list, listindex) in documentaries">
-            <HtmlView class="h2" :html="list.masterCategory" />
-            <ScrollView orientation="horizontal">
-                <StackLayout orientation="horizontal" >
-                    <GridLayout v-for="(item, index) in list.items" rows="156" columns="277" @tap="onItemTap(listindex, index, 3)" >
-                        <Image row="0" col="0" :src="'http://hbbtv.ert.gr'+item.menu_img_url" class="card"  loadMode="async" stretch="aspectFill"  />
-                    </GridLayout>
-                </StackLayout>
-            </ScrollView>              
-        </StackLayout> 
-            <Label text="Ενημέρωση" class="h2" />
-            <ScrollView orientation="horizontal">
-                <StackLayout orientation="horizontal" >
-                    <GridLayout v-for="(enim, indexe) in enimerosi" rows="156" columns="277"  @tap="onItemTap(0,indexe,4)">
+                    <GridLayout v-for="(enim, indexe) in enimerosi" rows="156" columns="277"  @tap="onItemTap(0,indexe,3)">
                         <Image row="0" col="0" :src="enim.image" class="card" loadMode="async" stretch="aspectFill"  />
                     </GridLayout>
                 </StackLayout>
             </ScrollView>         
-        <StackLayout v-for="(list, listindex) in paidika">
-            <HtmlView class="h2" :html="list.masterCategory" />
-            <ScrollView orientation="horizontal">
-                <StackLayout orientation="horizontal" >
-                    <GridLayout v-for="(item, index) in list.items" rows="156" columns="277" @tap="onItemTap(listindex, index, 5)" >
-                        <Image row="0" col="0" :src="'http://hbbtv.ert.gr'+item.menu_img_url" class="card"  loadMode="async" stretch="aspectFill"  />
-                    </GridLayout>
-                </StackLayout>
-            </ScrollView>              
-        </StackLayout>                
         </StackLayout>
         </ScrollView>   
     </Page>
@@ -131,20 +99,11 @@
                         break;
                     case 2:
                         seira = this.seires[l].items[args];
-                        break;
-                    case 3:
-                        seira = this.documentaries[l].items[args];
                         break;    
-                    case 4:
+                    case 3:
                         seira = this.enimerosi[args];
                         NavNext = "Movie";
                         break;
-                    case 5:
-                        seira = this.paidika[l].items[args];
-                        break;  
-                    case 6:
-                        seira = this.xdoc[l].items[args];
-                        break;                                                
                     };
                 this.$goto(NavNext, {
                     animated: true,
@@ -203,13 +162,15 @@
                 method: "GET",
                 }).then(response => {
                 this.seires = response.content.toJSON().services.filter(function (chain) {
-                        return chain.id === "32";});
-                this.xdoc = response.content.toJSON().services.filter(function (chain) {
-                        return chain.id === "42";});
-                this.documentaries = response.content.toJSON().services.filter(function (chain) {
-                        return chain.id === "26";});
-                this.paidika = response.content.toJSON().services.filter(function (chain) {
-                        return chain.id === "29";});                    
+                    return chain.id != "15" && chain.items != [];});
+//                this.seires = response.content.toJSON().services.filter(function (chain) {
+//                        return chain.id === "32";});
+//                this.xdoc = response.content.toJSON().services.filter(function (chain) {
+//                      return chain.id === "42";});
+//                this.documentaries = response.content.toJSON().services.filter(function (chain) {
+//                        return chain.id === "26";});
+//                this.paidika = response.content.toJSON().services.filter(function (chain) {
+//                        return chain.id === "29";});                    
                 }, error => {
                 console.error(error);
                 });
@@ -219,10 +180,7 @@
             return {
                 movies: [ ],
                 seires: [ ],
-                xdoc: [ ],
-                documentaries: [ ],              
                 enimerosi: [ ],
-                paidika: [ ],
                 idx: 0,
                 ok: false,
             };
