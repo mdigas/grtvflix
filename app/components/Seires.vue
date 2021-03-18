@@ -9,8 +9,8 @@
             <HtmlView class="title" :html="mv.title" />
             <HtmlView class="smalldesc" :html="mv.short_desc" />
             <Label  class="duration" text="Επεισόδια" />
-            <GridLayout  v-for="(episode, index) in episodes" rows="*, auto" columns="*" >
-                <Image row="0" col="0" :src="episode.image" class="card"  loadMode="async" stretch="aspectFill" @tap="onTapPlay(index)" />
+            <GridLayout class="card" v-for="(episode, index) in episodes" rows="*, auto" columns="*" >
+                <Image row="0" col="0" :src="episode.image" loadMode="async" stretch="aspectFill" @tap="onTapPlay(index)" />
                     <StackLayout row="1" col="0" class="subcard" >
                         <HtmlView v-if="episode.title" :html="episode.title" class="eptitle" />
                         <Label v-if="episode.expiration_date" class="epsmalld" :text="'Διάρκεια: '+episode.dur+'    Διαθ.Μέχρι: '+episode.expiration_date" />
@@ -24,7 +24,7 @@
                             <Button row="0" col="0" class="btnplay" @tap="onDownloadTap(index)">
                                 <FormattedString>
                                     <Span class="fas" text.decode="&#xf0ab;" fontAttributes="Bold"></Span>
-                                    <Span v-if="display === index" :text="'  '+progress"  />
+                                    <Span :text="' '+progress[index]"  />
                                 </FormattedString>
                             </Button>
                             <Button row="0" col="1" class="btnplay" @tap="onDPlay(index)">
@@ -54,8 +54,8 @@
             <Label  class="duration" text="Επεισόδια" />
             <ScrollView orientation="vertical" >
                 <StackLayout orientation="vertical" >
-                        <GridLayout  v-for="(episode, index) in episodes" rows="*, auto" columns="*" >
-                            <Image row="0" col="0" :src="episode.image" class="card"  loadMode="async" stretch="aspectFill" @tap="onTapPlay(index)" />
+                        <GridLayout class="card" v-for="(episode, index) in episodes" rows="*, auto" columns="*" >
+                            <Image row="0" col="0" :src="episode.image" loadMode="async" stretch="aspectFill" @tap="onTapPlay(index)" />
                             <StackLayout row="1" col="0" class="subcard" >
                                 <HtmlView v-if="episode.title" :html="episode.title" class="eptitle" />
                                 <Label v-if="episode.expiration_date" class="epsmalld" :text="'Διάρκεια: '+episode.dur+'    Διαθ.Μέχρι: '+episode.expiration_date" />
@@ -69,7 +69,7 @@
                                     <Button row="0" col="0" class="btnplay" @tap="onDownloadTap(index)">
                                         <FormattedString>
                                         <Span class="fas" text.decode="&#xf0ab;" fontAttributes="Bold"></Span>
-                                        <Span v-if="display === index" :text="'  '+progress"  />
+                                        <Span :text="' '+progress[index]"  />
                                         </FormattedString>
                                     </Button>
                                     <Button row="0" col="1" class="btnplay" @tap="onDPlay(index)">
@@ -97,6 +97,7 @@
     var utilsModule = require("tns-core-modules/utils/utils");
     import * as fs from 'tns-core-modules/file-system';
     import * as application from 'application';
+    const fileSystem = require("tns-core-modules/file-system");
     export default {
         methods: {
             onTapPlay: function(args) {
@@ -108,6 +109,7 @@
             },
             onDPlay: function(args) {
                 var url =this.episodes[args].mp4;
+                url=url.replace("\/r\/1", "");
                 var filename = url.substring(url.lastIndexOf('/')+1);
                 if (fs.File.exists('/sdcard/Download/'+filename)){
                     let intent = new android.content.Intent(android.content.Intent.ACTION_VIEW);
@@ -122,34 +124,36 @@
             },
             onDel: function(args) {
                 var url =this.episodes[args].mp4;
+                url=url.replace("\/r\/1", "");
                 var filename = url.substring(url.lastIndexOf('/')+1);
                 var file = fs.File.fromPath('/sdcard/Download/'+filename);
                 file.remove();
+                this.$set(this.progress, args, "");
             },            
             onDownloadTap: function(args) {
-                this.display = args;
                 var url =this.episodes[args].mp4;
+                url=url.replace("\/r\/1", "");
                 var filename = url.substring(url.lastIndexOf('/')+1);
-                var Downloader = require('nativescript-downloader').Downloader;
-                var downloader = new Downloader();
-                var imageDownloaderId = downloader.createDownload({
-                url: this.episodes[args].mp4,
-                path: '/sdcard/Download',
-                fileName: filename
-                });
+                if (!fs.File.exists('/sdcard/Download/'+filename)){
+                    var srDownloaderId = this.$Downloader.createDownload({
+                        url: url,
+                        path: '/sdcard/Download',
+                        fileName: filename              
+                    });
 
-                downloader
-                .start(imageDownloaderId, progressData => {
-                    this.progress = progressData.value+'%';
+                this.$Downloader
+                .start(srDownloaderId, progressData => {
+                    this.$set(this.progress, args, progressData.value+'%');
                     console.log(`Progress : ${progressData.value}%`);
                 })
                 .then(completed => {
-                    this.progress[args] = 'downloaded';
                     console.log(`Image : ${completed.path}`);
                 })
                 .catch(error => {
                     console.log(error.message);
                 });
+                    
+                };
             },            
         },
 
@@ -165,16 +169,29 @@
                 method: "GET",
                 }).then(response => {
                 this.episodes = response.content.toJSON().elems[0].items;
+
+                var temp = []; 
+                var url="";
+                var filename="";
+                var filePath="";
+                for (var i = 0; i < this.episodes.length; i++) {
+                  url= this.episodes[i].mp4;
+                  url=url.replace("\/r\/1", "");
+                  filename = url.substring(url.lastIndexOf('/')+1);
+                  filePath= fileSystem.path.join(android.os.Environment.getExternalStoragePublicDirectory(android.os.Environment.DIRECTORY_DOWNLOADS).getAbsolutePath(), filename);
+                  temp.push(fs.File.exists(filePath)? "100%":"");
+                };
+                this.progress = temp;
+
                 }, error => {
                 console.error(error);
                 });
+        
         },
-
         data() {
             return {
                 mv: this.$props.msitem,
-                progress: '',
-                display: '',
+                progress: [],
                 episodes: [],
             };                
         },

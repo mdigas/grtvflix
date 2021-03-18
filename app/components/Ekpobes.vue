@@ -12,21 +12,21 @@
         <ScrollView  orientation="vertical">
         <StackLayout v-if="ok" orientation="vertical">
         <StackLayout v-for="(list, listindex) in xdoc">
-            <HtmlView class="h2" :html="list.masterCategory" />
+            <HtmlView v-if="list.masterCategory && list.items.length !== 0" class="h4" :html="list.masterCategory" />
             <ScrollView orientation="horizontal">
                 <StackLayout orientation="horizontal" >
                     <GridLayout v-for="(item, index) in list.items" rows="156" columns="277" @tap="onItemTap(listindex, index, 2)" >
-                        <Image row="0" col="0" :src="'http://hbbtv.ert.gr'+item.menu_img_url" class="card"  loadMode="async" stretch="aspectFill"  />
+                        <Image row="0" col="0" :src="'http://hbbtv.ert.gr'+item.menu_img_url" class="card" loadMode="async" stretch="aspectFill"  />
                     </GridLayout>
                 </StackLayout>
             </ScrollView>              
         </StackLayout> 
         <StackLayout v-for="(list, listindex) in documentaries">
-            <HtmlView class="h2" :html="list.masterCategory" />
+            <HtmlView v-if="list.masterCategory && list.items.length !== 0" class="h4" :html="list.masterCategory" />
             <ScrollView orientation="horizontal">
                 <StackLayout orientation="horizontal" >
                     <GridLayout v-for="(item, index) in list.items" rows="156" columns="277" @tap="onItemTap(listindex, index, 1)" >
-                        <Image row="0" col="0" :src="'http://hbbtv.ert.gr'+item.menu_img_url" class="card"  loadMode="async" stretch="aspectFill"  />
+                        <Image row="0" col="0" :src="'http://hbbtv.ert.gr'+item.menu_img_url" class="card" loadMode="async" stretch="aspectFill"  />
                     </GridLayout>
                 </StackLayout>
             </ScrollView>              

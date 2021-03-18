@@ -14,34 +14,30 @@
             </StackLayout>
         </ActionBar>
         <ScrollView  orientation="vertical">
-        <StackLayout v-if="ok" orientation="vertical">
-             <Image :src="movies[idx].org" opacity="0.8" loadMode="async" horizontalAlignment="center" stretch="aspectFit"  /> 
+        <StackLayout v-if="ok" orientation="vertical" >
+             <Image :src="movies[idx].org" opacity="0.8" loadMode="async" horizontalAlignment="center" stretch="aspectFit" @tap="onItemTap(0, idx, 1)" /> 
              <!-- <Image row="0" col="0" colSpan="3" rowSpan="2" :src="movies[idx].bg_img_url" loadMode="async" horizontalAlignment="right" stretch="fill"  /> 
                   <Image row="0" col="0" colSpan="3" :src="movies[0].org" loadMode="async" opacity="0.5" stretch="aspectFit"  /> -->
-             <StackLayout class="box">
-                <Label class="title" :text="movies[idx].title" textWrap="true" />
-                <Label class="duration" :text="'Διάρκεια: '+movies[idx].dur" />
-                <Label class="smalldesc" :text="movies[idx].short_desc" textWrap="true" />
-            </StackLayout>
-            <Label text="Ταινίες" class="h3" />
+            <Label text="Ταινίες" class="h4" />
             <ScrollView orientation="horizontal">
                 <StackLayout orientation="horizontal" >
                     <GridLayout v-for="(movie, index) in movies" rows="156" columns="277" @tap="onItemTap(0, index, 1)" >
-                        <Image row="0" col="0" :src="movie.image" class="card"  loadMode="async" stretch="aspectFill"  />
+                        <Image row="0" col="0" :src="movie.image"  class="card"  loadMode="async" stretch="aspectFill"  />
                     </GridLayout>
                 </StackLayout>
             </ScrollView>         
         <StackLayout v-for="(list, listindex) in seires">
-            <HtmlView class="h3" :html="list.title+'-'+list.masterCategory" />
+            <HtmlView v-if="list.masterCategory && list.items.length !== 0" class="h4" :html="list.title+'-'+list.masterCategory" />
+            <HtmlView v-if="!list.masterCategory  && list.items.length !== 0" class="h4" :html="list.title" />
             <ScrollView orientation="horizontal">
                 <StackLayout orientation="horizontal" >
                     <GridLayout v-for="(item, index) in list.items" rows="156" columns="277" @tap="onItemTap(listindex, index, 2)" >
-                        <Image row="0" col="0" :src="'http://hbbtv.ert.gr'+item.menu_img_url" class="card"  loadMode="async" stretch="aspectFill"  />
+                        <Image row="0" col="0" :src="'http://hbbtv.ert.gr'+item.menu_img_url" class="card" loadMode="async" stretch="aspectFill"  />
                     </GridLayout>
                 </StackLayout>
             </ScrollView>              
         </StackLayout>
-            <Label text="Ενημέρωση" class="h3" />
+            <Label text="Ενημέρωση" class="h4" />
             <ScrollView orientation="horizontal">
                 <StackLayout orientation="horizontal" >
                     <GridLayout v-for="(enim, indexe) in enimerosi" rows="156" columns="277"  @tap="onItemTap(0,indexe,3)">

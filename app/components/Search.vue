@@ -17,7 +17,7 @@
                 <SearchBar v-model="searchQuery" class="search" @submit="onSearchSubmit" />
                     <WrapLayout>
                         <GridLayout  v-for="(ekp, index) in ekpompes" rows="156, auto" columns="277"  @tap="onTapPlay(index)" >
-                            <Image row="0" col="0" :src="ekp.bild" class="card"  loadMode="async" stretch="aspectFill"  />
+                            <Image row="0" col="0" :src="ekp.bild" class="card" loadMode="async" stretch="aspectFill"  />
                             <HtmlView row="1" col="0" class="title" :html="ekp.title" />
                         </GridLayout>
                     </WrapLayout>   

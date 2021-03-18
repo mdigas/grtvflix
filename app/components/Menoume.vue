@@ -7,7 +7,7 @@
             <StackLayout orientation="vertical">
                 <Image :src="imag[$props.no]" loadMode="async" /> 
                 <GridLayout columns="auto,*" rows="auto"  v-for="(lesson, index) in lessons" >
-                    <HtmlView row="0" col="1" class="h4menu" :html="lesson.title+'<br>'+lesson.educator" verticalAlignment="center left" textWrap="true" style="color: white;" />
+                    <HtmlView row="0" col="1" :html="lesson.title+'<br>'+lesson.educator" verticalAlignment="center left" textWrap="true" style="color: white;" />
                     <Button row="0" col="0" class="lbl" text="" horizontalAlignment="right" @tap="onTapPlay(index)" >    
                         <FormattedString><Span text="Προβολή" ></Span></FormattedString>
                     </Button>

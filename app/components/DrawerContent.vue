@@ -3,7 +3,7 @@
             <StackLayout row="0" class="nt-drawer__header">
                 <Image src="res://icon" width="72" height="72"></Image>
                 <Label class="h5" text="GRTVFLIX"></Label>
-                <Label class="h6" text="ertflix@protonmail.com"></Label>
+                <Label class="h6" text=" "></Label>
             </StackLayout>
         
             <ScrollView row="1" class="nt-drawer__body">

@@ -87,6 +87,9 @@
     var utilsModule = require("tns-core-modules/utils/utils");
     import * as application from 'application';
     import * as fs from 'tns-core-modules/file-system';
+    const fileSystem = require("tns-core-modules/file-system");
+    var Downloader = require('nativescript-downloader').Downloader;
+    const downloader = new Downloader();
     export default {
         methods: {
             onTapPlay: function(args) {
@@ -96,17 +99,17 @@
             },
             onDownloadTap: function(args) {
                 var url =this.mv.mp4;
+                url=url.replace("\/r\/1", "");
                 var filename = url.substring(url.lastIndexOf('/')+1);
-                var Downloader = require('nativescript-downloader').Downloader;
-                var downloader = new Downloader();
-                var imageDownloaderId = downloader.createDownload({
-                url: this.mv.mp4,
-                path: '/sdcard/Download',
-                fileName: filename              
+                if (!fs.File.exists('/sdcard/Download/'+filename)){   
+                    var mvDownloaderId = this.$Downloader.createDownload({
+                        url: url,
+                        path: '/sdcard/Download',
+                        fileName: filename              
                 });
 
-                downloader
-                .start(imageDownloaderId, progressData => {
+                this.$Downloader
+                .start(mvDownloaderId, progressData => {
                     this.progress = progressData.value+'%';
                     console.log(`Progress : ${progressData.value}%`);
                 })
@@ -115,12 +118,18 @@
                 })
                 .catch(error => {
                     console.log(error.message);
-                });
+                });              
+                   
+                };
+
             },
             onDPlay: function(args) {
                 var url =this.mv.mp4;
+                url=url.replace("\/r\/1", "");
                 var filename = url.substring(url.lastIndexOf('/')+1);
-                if (fs.File.exists('/sdcard/Download/'+filename)){
+                var filePath = fileSystem.path.join(android.os.Environment.getExternalStoragePublicDirectory(android.os.Environment.DIRECTORY_DOWNLOADS).getAbsolutePath(), filename);
+                console.log(filePath);
+                if (fs.File.exists(filePath)){
                     let intent = new android.content.Intent(android.content.Intent.ACTION_VIEW);
                     let mimeType = "video/mp4";
                     let context = application.android.currentContext;
@@ -133,9 +142,11 @@
             },
             onDel: function(args) {
                 var url =this.mv.mp4;
+                url=url.replace("\/r\/1", "");
                 var filename = url.substring(url.lastIndexOf('/')+1);
                 var file = fs.File.fromPath('/sdcard/Download/'+filename);
                 file.remove();
+                this.progress = "";
             },             
             onmoreTap: function(args) {
                 console.log("Item with index: " + args + " tapped");
@@ -155,6 +166,13 @@
         },
 
         props: ["msitem"], 
+        created: function() {
+                var url =this.mv.mp4;
+                url=url.replace("\/r\/1", "");
+                var filename = url.substring(url.lastIndexOf('/')+1);
+                var filePath = fileSystem.path.join(android.os.Environment.getExternalStoragePublicDirectory(android.os.Environment.DIRECTORY_DOWNLOADS).getAbsolutePath(), filename);
+                this.progress = fs.File.exists(filePath)? "100%":"";        
+        },
         data() {
             return {
                 mv: this.$props.msitem, 
@@ -162,7 +180,6 @@
                 starthtml: '<div style="color: white;background-color: black;"',
                 endhtml: '</div>',
             };
-        },
-        
-    };
+        }
+  }
 </script>
