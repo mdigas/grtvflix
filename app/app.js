@@ -15,10 +15,6 @@ Vue.prototype.$goto = function (to, options) {
 import RadSideDrawer from "nativescript-ui-sidedrawer/vue";
 Vue.use(RadSideDrawer);
 
-// Download Manager
-var Downloader = require('nativescript-downloader').Downloader;
-Downloader.init();
-
 // Layout change on orientation change
 import * as platform from 'platform';
 if(platform.Screen.mainScreen.widthPixels > platform.Screen.mainScreen.heightPixels){ 
@@ -26,6 +22,12 @@ if(platform.Screen.mainScreen.widthPixels > platform.Screen.mainScreen.heightPix
 else{
   Vue.prototype.$orientation = 'portrait';
 };
+
+// Download Manager
+var Downloader = require('nativescript-downloader').Downloader;
+Downloader.init();
+Vue.prototype.$Downloader = new Downloader();
+
 
 import * as app from "tns-core-modules/application";
 app.on('orientationChanged', (evt) => {
