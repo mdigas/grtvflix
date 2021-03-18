@@ -1,31 +1,55 @@
 {
-  "nativescript": {
-    "id": "org.nativescript.ertflix1",
-    "tns-ios": {
-      "version": "6.5.0"
-    },
-    "tns-android": {
-      "version": "6.5.0"
-    }
-  },
+  "name": "@nativescript/template-drawer-navigation-vue",
+  "main": "app.js",
+  "displayName": "Navigation Drawer",
+  "templateType": "App template",
+  "version": "7.0.4",
   "description": "NativeScript Application",
+  "author": "NativeScript Team <oss@nativescript.org>",
   "license": "SEE LICENSE IN <your-license-filename>",
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "nstudio",
+    "nativescript",
+    "mobile",
+    "{N}",
+    "tns",
+    "vue",
+    "nativescript-vue",
+    "template",
+    "drawer",
+    "navigation",
+    "category-general"
+  ],
   "repository": "<fill-your-repository-here>",
+  "homepage": "https://github.com/NativeScript/nativescript-app-templates",
+  "bugs": {
+    "url": "https://github.com/NativeScript/NativeScript/issues"
+  },
   "dependencies": {
-    "@nativescript/theme": "~2.3.3",
-    "nativescript-fonticon": "^2.0.0",
-    "nativescript-vue": "~2.5.0",
-    "tns-core-modules": "~6.5.0"
+    "@nativescript/core": "~7.1.0",
+    "@nativescript/theme": "~2.3.0",
+    "nativescript-downloader": "file:nativescript-downloader-2.1.5.tgz",
+    "nativescript-permissions": "^1.3.11",
+    "nativescript-ui-sidedrawer": "~9.0.0",
+    "nativescript-vue": "~2.8.0",
+    "rxjs": "^6.6.0"
   },
   "devDependencies": {
     "@babel/core": "~7.1.0",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
     "@babel/preset-env": "~7.1.0",
+    "@babel/preset-flow": "^7.12.13",
+    "@babel/preset-react": "^7.12.13",
+    "@nativescript/android": "7.0.1",
+    "@nativescript/webpack": "~4.0.0",
     "babel-loader": "~8.0.0",
-    "nativescript-dev-webpack": "~1.5.1",
-    "nativescript-vue-template-compiler": "~2.5.0",
+    "nativescript-vue-template-compiler": "~2.8.0",
     "node-sass": "^4.7.1",
-    "vue-loader": "~15.9.0"
+    "vue-loader": "~15.9.3"
   },
-  "gitHead": "2250137db8c1e0bd0eb543e8e4563cb71480c00d",
+  "private": "true",
   "readme": "NativeScript Application"
 }
